@@ -3,6 +3,9 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.util.Stack;
 import java.util.ArrayList;
+import java.io.File;
+import java.io.FileReader;
+import java.io.BufferedReader;
 
 public class GraphicOrganizer {
 	private JFrame organizerFrame;	//the main organizer window
@@ -11,6 +14,7 @@ public class GraphicOrganizer {
 	private JPanel flexiblePanel;	//the panel that will change according to what button is pressed
 	private static JPanel actionPanel;		//the panel that contains the action button and back button
 	private static JPanel infoPanel;		//the panel that contains the inputs 
+	private static JScrollPane infoPanelScroll;
 	
 	private JButton saveButton;			//the save button
 	private JButton classButton;		//the class notes button
@@ -91,8 +95,87 @@ public class GraphicOrganizer {
 	
 	static Stack<Integer> screens;		//keeps track of what screens the user had visited before
 	
-	public GraphicOrganizer()
-	{
+	File noteFile;
+	File activityFile;
+	File mondayFile;
+	File tuesdayFile;
+	File wednesdayFile;
+	File thursdayFile;
+	File fridayFile;
+
+	boolean noteFileExists;
+	boolean activityFileExists;
+	boolean mondayFileExists;
+	boolean tuesdayFileExists;
+	boolean wednesdayFileExists;
+	boolean thursdayFileExists;
+	boolean fridayFileExists;
+	
+	public GraphicOrganizer() throws Exception
+	{	
+		noteFile = new File("NoteList.txt");
+		activityFile = new File("ActivityList.txt");
+		mondayFile = new File("MondayClasses.txt");
+		tuesdayFile = new File("TuesdayClasses.txt");
+		wednesdayFile = new File("WednesdayClasses.txt");
+		thursdayFile = new File("ThursdayClasses.txt");
+		fridayFile = new File("FridayClasses.txt");
+		
+		noteFileExists = noteFile.exists();
+		activityFileExists = activityFile.exists();
+		mondayFileExists = mondayFile.exists();
+		tuesdayFileExists = tuesdayFile.exists();
+		wednesdayFileExists = wednesdayFile.exists();
+		thursdayFileExists = thursdayFile.exists();
+		fridayFileExists = fridayFile.exists();
+		
+		if (!noteFileExists)
+			noteFile.createNewFile();
+		else
+		{
+			BufferedReader noteReader = new BufferedReader(new FileReader("NoteList.txt"));
+			String noteLine;
+			String[] noteArray;
+			while ((noteLine = noteReader.readLine()) != null)
+			{
+				noteArray = new String[0];
+				noteArray = noteLine.split("<Space>");
+				createNewNoteObject(noteArray[0], noteArray[1], noteArray[2], noteArray[3], noteArray[4]);
+			}
+			noteReader.close();
+		}
+			//read from the file
+		
+		if (!activityFileExists)
+			activityFile.createNewFile();
+		else;
+			//read from the file
+		
+		if (!mondayFileExists)
+			mondayFile.createNewFile();
+		else;
+			//read from the file
+		
+		if (!tuesdayFileExists)
+			tuesdayFile.createNewFile();
+		else;
+			//read from the file
+		
+		if (!wednesdayFileExists)
+			wednesdayFile.createNewFile();
+		else;
+			//read from the file
+		
+		if (!thursdayFileExists)
+			thursdayFile.createNewFile();
+		else;
+			//read from the file
+		
+		if (!fridayFileExists)
+			fridayFile.createNewFile();
+		else;
+			//read from the file
+		
 		screens = new Stack<Integer>();
 		
 		organizerFrame = new JFrame("Graphic Organizer");	//create a new window titled "Graphic Organizer"
@@ -124,14 +207,26 @@ public class GraphicOrganizer {
 		infoPanel = new JPanel();
 		infoPanel.setLayout(new GridBagLayout());
 		//infoPanel.setBorder(BorderFactory.createMatteBorder(1, 0, 0, 0, Color.BLACK));		//display border limits
-		flexiblePanel.add(infoPanel, BorderLayout.CENTER);
+		
+		infoPanelScroll = new JScrollPane(infoPanel);
+		infoPanel.setAutoscrolls(true);
+		infoPanelScroll.setPreferredSize(new Dimension(800, 300));
+		
+		flexiblePanel.add(infoPanelScroll, BorderLayout.CENTER);
 		
 		//create the save button
 		saveButton = new JButton("Save");
+		saveButton.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				saveField.setText("Progress has been saved.");
+			}
+		});
 		topPanel.add(saveButton);
 		
 		//create the "progress has been saved" textfield
-		saveField = new JTextField("Progress has been saved.");
+		saveField = new JTextField();
 		saveField.setEnabled(false);	//disables input
 		saveField.setHorizontalAlignment(JTextField.RIGHT);		//displays message to the right of the field
 		saveField.setDisabledTextColor(Color.BLACK);
@@ -180,7 +275,6 @@ public class GraphicOrganizer {
 						screens.push(13);
 						clearPanel();
 						newClassDetails();
-						System.out.println(screens);
 					}
 				}
 				else if (actionButton.getText().equals("Add New Note"))
@@ -205,6 +299,7 @@ public class GraphicOrganizer {
 					screens.push(1);		//1 indicates that the screen will display class notes
 					clearPanel();
 					showClassNotes();		//display class notes
+					saveField.setText("");
 				}
 				else if (actionButton.getText().equals("Remove Activity"))
 				{
@@ -213,11 +308,13 @@ public class GraphicOrganizer {
 					screens.push(2);		//2 indicates that the screen displays activities
 					clearPanel();
 					showActivities();		//show activities
+					saveField.setText("");
 				}
 				else if (actionButton.getText().equals("Remove Class"))
 				{
 					removeClass();
 					returnPreviousScreen();
+					saveField.setText("");
 				}
 			}
 		});
@@ -231,12 +328,15 @@ public class GraphicOrganizer {
 		noteDate.setEnabled(false);						//disables text field
 		
 		noteDateMonth = new JTextField("MM");						//displays two large M's
+		noteDateMonth.setColumns(4);
 		noteDateMonth.setHorizontalAlignment(JTextField.CENTER);	//centers text
 		
-		noteDateDay = new JTextField("DD");							//displays two large D's
+		noteDateDay = new JTextField("DD");		//displays two large D's
+		noteDateDay.setColumns(4);
 		noteDateDay.setHorizontalAlignment(JTextField.CENTER);		//centers text
 		
 		noteDateYear = new JTextField("YYYY");						//displays four large Y's
+		noteDateYear.setColumns(5);
 		noteDateYear.setHorizontalAlignment(JTextField.CENTER);		//centers text
 		
 		noteTitle = new JTextField("Enter title of note here");				//displays where to enter the title
@@ -293,12 +393,15 @@ public class GraphicOrganizer {
 		activityFrom.setEnabled(false);						//disables field
 		
 		activityFromMonth = new JTextField("MM");						//displays two M's
+		activityFromMonth.setColumns(4);
 		activityFromMonth.setHorizontalAlignment(JTextField.CENTER);	//centers text
 		
 		activityFromDay = new JTextField("DD");							//displays two D's
+		activityFromDay.setColumns(4);
 		activityFromDay.setHorizontalAlignment(JTextField.CENTER);		//centers text
 		
 		activityFromYear = new JTextField("YYYY");						//displays four Y's
+		activityFromYear.setColumns(5);
 		activityFromYear.setHorizontalAlignment(JTextField.CENTER);
 		
 		activityTo = new JTextField("To: ");
@@ -308,12 +411,15 @@ public class GraphicOrganizer {
 		activityTo.setEnabled(false);
 		
 		activityToMonth = new JTextField("MM");
+		activityToMonth.setColumns(4);
 		activityToMonth.setHorizontalAlignment(JTextField.CENTER);
 		
 		activityToDay = new JTextField("DD");
+		activityToDay.setColumns(4);
 		activityToDay.setHorizontalAlignment(JTextField.CENTER);
 		
 		activityToYear = new JTextField("YYYY");
+		activityToYear.setColumns(5);
 		activityToYear.setHorizontalAlignment(JTextField.CENTER);
 		
 		activityStart = new JTextField("Start: ");
@@ -323,9 +429,11 @@ public class GraphicOrganizer {
 		activityStart.setEnabled(false);
 		
 		activityStartHour = new JTextField("HH");
+		activityStartHour.setColumns(4);
 		activityStartHour.setHorizontalAlignment(JTextField.CENTER);
 		
 		activityStartMinute = new JTextField("MM");
+		activityStartMinute.setColumns(4);
 		activityStartMinute.setHorizontalAlignment(JTextField.CENTER);
 		
 		activityStartTOD = new JComboBox<String>(timeOfDay);		//time of day drop box for activity start
@@ -337,9 +445,11 @@ public class GraphicOrganizer {
 		activityEnd.setEnabled(false);
 		
 		activityEndHour = new JTextField("HH");
+		activityEndHour.setColumns(4);
 		activityEndHour.setHorizontalAlignment(JTextField.CENTER);
 		
 		activityEndMinute = new JTextField("MM");
+		activityEndMinute.setColumns(4);
 		activityEndMinute.setHorizontalAlignment(JTextField.CENTER);
 		
 		activityEndTOD = new JComboBox<String>(timeOfDay);			//time of day drop box for activity end
@@ -462,10 +572,12 @@ public class GraphicOrganizer {
 		classStart.setEnabled(false);
 		
 		classStartHour = new JTextField("HH");
+		classStartHour.setColumns(4);
 		classStartHour.setHorizontalAlignment(JTextField.CENTER);
 		classStartHour.setDisabledTextColor(Color.BLACK);
 		
 		classStartMinute = new JTextField("MM");
+		classStartMinute.setColumns(4);
 		classStartMinute.setHorizontalAlignment(JTextField.CENTER);
 		classStartMinute.setDisabledTextColor(Color.BLACK);
 		
@@ -478,10 +590,12 @@ public class GraphicOrganizer {
 		classEnd.setEnabled(false);
 		
 		classEndHour = new JTextField("HH");
+		classEndHour.setColumns(4);
 		classEndHour.setHorizontalAlignment(JTextField.CENTER);
 		classEndHour.setDisabledTextColor(Color.BLACK);
 		
 		classEndMinute = new JTextField("MM");
+		classEndMinute.setColumns(4);
 		classEndMinute.setHorizontalAlignment(JTextField.CENTER);
 		classEndMinute.setDisabledTextColor(Color.BLACK);
 		
@@ -493,7 +607,7 @@ public class GraphicOrganizer {
 		{
 			public void mouseClicked(MouseEvent e)
 			{
-				if (classLocation.getText().equals("Enter class location here"))
+				if (classLocation.isEnabled() && classLocation.getText().equals("Enter class location here"))
 					classLocation.setText("");
 			}
 		});
@@ -505,7 +619,7 @@ public class GraphicOrganizer {
 		{
 			public void mouseClicked(MouseEvent e)
 			{
-				if (classTitle.getText().equals("Enter class name here"))
+				if (classTitle.isEnabled() && classTitle.getText().equals("Enter class name here"))
 					classTitle.setText("");
 			}
 		});
@@ -1032,6 +1146,13 @@ public class GraphicOrganizer {
 	{
 		noteObject.add(new NewNoteObject(noteDateMonth.getText(), noteDateDay.getText(), noteDateYear.getText(), 
 				noteTitle.getText(), noteInfo.getText()));
+		
+		saveField.setText("");
+	}
+	
+	public void createNewNoteObject(String month, String day, String year, String title, String info)	//for reading a file
+	{
+		noteObject.add(new NewNoteObject(month, day, year, title, info));
 	}
 	
 	public void createNewActivityObject()
@@ -1041,6 +1162,8 @@ public class GraphicOrganizer {
 				activityToYear.getText(), activityStartHour.getText(), activityStartMinute.getText(), 
 				activityStartTOD.getSelectedItem(), activityEndHour.getText(), activityEndMinute.getText(),
 				activityEndTOD.getSelectedItem(), activityTitle.getText(), activityInfo.getText()));
+		
+		saveField.setText("");
 	}
 	
 	public void createNewClassObject()
@@ -1065,6 +1188,8 @@ public class GraphicOrganizer {
 			fridayClasses.add(new NewClassScheduleObject(classStartHour.getText(), classStartMinute.getText(),
 					classStartTOD.getSelectedItem(), classEndHour.getText(), classEndMinute.getText(), 
 					classEndTOD.getSelectedItem(), classLocation.getText(), classTitle.getText()));
+		
+		saveField.setText("");
 		/*
 		System.out.println("Monday: " + mondayClasses + "\n" +
 					"Tuesday: " + tuesdayClasses + "\n" + 
@@ -1177,7 +1302,7 @@ public class GraphicOrganizer {
 	}
 	*/
 	
-	public static void main(String[] args)
+	public static void main(String[] args) throws Exception
 	{
 		GraphicOrganizer theOrganizer = new GraphicOrganizer();
 	}
