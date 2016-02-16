@@ -5,6 +5,8 @@ import java.util.Stack;
 import java.util.ArrayList;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.PrintWriter;
 import java.io.BufferedReader;
 
 public class GraphicOrganizer {
@@ -133,7 +135,10 @@ public class GraphicOrganizer {
 			noteFile.createNewFile();
 		else
 		{
+			//read from the file
 			BufferedReader noteReader = new BufferedReader(new FileReader("NoteList.txt"));
+			BufferedReader activityReader = new BufferedReader(new FileReader("ActivityList.txt"));
+			
 			String noteLine;
 			String[] noteArray;
 			while ((noteLine = noteReader.readLine()) != null)
@@ -143,8 +148,19 @@ public class GraphicOrganizer {
 				createNewNoteObject(noteArray[0], noteArray[1], noteArray[2], noteArray[3], noteArray[4]);
 			}
 			noteReader.close();
+			
+			String activityLine;
+			String[] activityArray;
+			while ((activityLine = activityReader.readLine()) != null)
+			{
+				activityArray = new String[0];
+				activityArray = activityLine.split("<Space>");
+				createNewActivityObject(activityArray[0], activityArray[1], activityArray[2], activityArray[3],
+						activityArray[4], activityArray[5], activityArray[6], activityArray[7], activityArray[8], 
+						activityArray[9], activityArray[10], activityArray[11], activityArray[12], activityArray[13]);
+			}
+			activityReader.close();
 		}
-			//read from the file
 		
 		if (!activityFileExists)
 			activityFile.createNewFile();
@@ -221,6 +237,14 @@ public class GraphicOrganizer {
 			public void actionPerformed(ActionEvent e)
 			{
 				saveField.setText("Progress has been saved.");
+				try
+				{
+				saveProgress();
+				}
+				catch (Exception except)
+				{
+					except.printStackTrace();
+				}
 			}
 		});
 		topPanel.add(saveButton);
@@ -1166,6 +1190,14 @@ public class GraphicOrganizer {
 		saveField.setText("");
 	}
 	
+	public void createNewActivityObject(String fromMonth, String fromDay, String fromYear, String toMonth, 
+			String toDay, String toYear, String startHour, String startMinute, String startTOD, String endHour, 
+			String endMinute, String endTOD, String title, String info)
+	{
+		activityObject.add(new NewActivityObject(fromMonth, fromDay, fromYear, toMonth, toDay, toYear, startHour, 
+				startMinute, startTOD, endHour, endMinute, endTOD, title, info));
+	}
+	
 	public void createNewClassObject()
 	{
 		if (classDayText.equals("Monday"))
@@ -1301,6 +1333,73 @@ public class GraphicOrganizer {
 		
 	}
 	*/
+	
+	public void saveProgress() throws Exception
+	{
+		PrintWriter noteWriter = new PrintWriter(noteFile);		//creates a new writer, while it erases the targeted file
+		PrintWriter activityWriter = new PrintWriter(activityFile);
+		
+		//record the notes created
+		for (int i = 0; i < noteObject.size(); i++)
+		{
+			/*
+			 *	//SAMPLE WRITE
+			writer.write("hello, HURRRRHGHGHGHGH");
+			writer.newLine();
+			writer.write("goodbye");
+			writer.close();
+			*/
+			//write down the parts of the note, each part being separated by the word <Space>
+			noteWriter.write(noteObject.get(i).getMonth());		//records month
+			noteWriter.write("<Space>");
+			noteWriter.write(noteObject.get(i).getDay());		//records the day
+			noteWriter.write("<Space>");
+			noteWriter.write(noteObject.get(i).getYear());		//records the year
+			noteWriter.write("<Space>");
+			noteWriter.write(noteObject.get(i).getTitle());		//records the title
+			noteWriter.write("<Space>");
+			noteWriter.write(noteObject.get(i).getInfo());		//records the note info
+			noteWriter.write("<Space>");
+			noteWriter.write("<NEWLINE>");
+			noteWriter.println();
+		}
+		noteWriter.close();
+
+		//record the activities created
+		for (int i = 0; i < activityObject.size(); i++)
+		{
+			activityWriter.write(activityObject.get(i).getFromMonth());
+			activityWriter.write("<Space>");
+			activityWriter.write(activityObject.get(i).getFromDay());
+			activityWriter.write("<Space>");
+			activityWriter.write(activityObject.get(i).getFromYear());
+			activityWriter.write("<Space>");
+			activityWriter.write(activityObject.get(i).getToMonth());
+			activityWriter.write("<Space>");
+			activityWriter.write(activityObject.get(i).getToDay());
+			activityWriter.write("<Space>");
+			activityWriter.write(activityObject.get(i).getToYear());
+			activityWriter.write("<Space>");
+			activityWriter.write(activityObject.get(i).getStartHour());
+			activityWriter.write("<Space>");
+			activityWriter.write(activityObject.get(i).getStartMinute());
+			activityWriter.write("<Space>");
+			activityWriter.write(activityObject.get(i).getStartTOD().toString());
+			activityWriter.write("<Space>");
+			activityWriter.write(activityObject.get(i).getEndHour());
+			activityWriter.write("<Space>");
+			activityWriter.write(activityObject.get(i).getEndMinute());
+			activityWriter.write("<Space>");
+			activityWriter.write(activityObject.get(i).getEndTOD().toString());
+			activityWriter.write("<Space>");
+			activityWriter.write(activityObject.get(i).getTitle());
+			activityWriter.write("<Space>");
+			activityWriter.write(activityObject.get(i).getInfo());
+			activityWriter.write("<Space>");
+			activityWriter.println();
+		}
+		activityWriter.close();
+	}
 	
 	public static void main(String[] args) throws Exception
 	{

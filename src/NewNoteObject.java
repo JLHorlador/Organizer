@@ -64,4 +64,30 @@ public class NewNoteObject
 		
 		return newNoteButton;
 	}
+	
+	public String getMonth()
+	{
+		return month;
+	}
+	
+	public String getDay()
+	{
+		return day;
+	}
+	
+	public String getYear()
+	{
+		return year;
+	}
+	
+	public String getTitle()
+	{
+		return title;
+	}
+	
+	public String getInfo()
+	{
+		return info;
+	}
+	
 }

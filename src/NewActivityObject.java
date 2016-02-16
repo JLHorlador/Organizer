@@ -42,11 +42,6 @@ public class NewActivityObject
 		numberIndex = 0;
 	}
 	
-	public void setIndex(int number)
-	{
-		numberIndex = number;
-	}
-	
 	public JButton createButton()
 	{
 		JButton newActivityButton = new JButton(title);
@@ -119,5 +114,80 @@ public class NewActivityObject
 		});
 		
 		return newActivityButton;
+	}
+	
+	public String getFromMonth()
+	{
+		return fromMonth;
+	}
+	
+	public String getFromDay()
+	{
+		return fromDay;
+	}
+	
+	public String getFromYear()
+	{
+		return fromYear;
+	}
+	
+	public String getToMonth()
+	{
+		return toMonth;
+	}
+	
+	public String getToDay()
+	{
+		return toDay;
+	}
+	
+	public String getToYear()
+	{
+		return toYear;
+	}
+	
+	public String getStartHour()
+	{
+		return startHour;
+	}
+	
+	public String getStartMinute()
+	{
+		return startMinute;
+	}
+	
+	public Object getStartTOD()
+	{
+		return startTOD;
+	}
+	
+	public String getEndHour()
+	{
+		return endHour;
+	}
+	
+	public String getEndMinute()
+	{
+		return endMinute;
+	}
+	
+	public Object getEndTOD()
+	{
+		return endTOD;
+	}
+	
+	public String getTitle()
+	{
+		return title;
+	}
+	
+	public String getInfo()
+	{
+		return info;
+	}
+	
+	public void setIndex(int number)
+	{
+		numberIndex = number;
 	}
 }
