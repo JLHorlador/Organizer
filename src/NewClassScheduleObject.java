@@ -75,4 +75,44 @@ public class NewClassScheduleObject
 		
 		return newClassButton;
 	}
+	
+	public String getStartHour()
+	{
+		return startHour;
+	}
+	
+	public String getStartMinute()
+	{
+		return startMinute;
+	}
+	
+	public String getStartTOD()
+	{
+		return startTOD.toString();
+	}
+	
+	public String getEndHour()
+	{
+		return endHour;
+	}
+	
+	public String getEndMinute()
+	{
+		return endMinute;
+	}
+	
+	public String getEndTOD()
+	{
+		return endTOD.toString();
+	}
+	
+	public String getLocation()
+	{
+		return location;
+	}
+	
+	public String getTitle()
+	{
+		return title;
+	}
 }

@@ -156,9 +156,9 @@ public class NewActivityObject
 		return startMinute;
 	}
 	
-	public Object getStartTOD()
+	public String getStartTOD()
 	{
-		return startTOD;
+		return startTOD.toString();
 	}
 	
 	public String getEndHour()
@@ -171,9 +171,9 @@ public class NewActivityObject
 		return endMinute;
 	}
 	
-	public Object getEndTOD()
+	public String getEndTOD()
 	{
-		return endTOD;
+		return endTOD.toString();
 	}
 	
 	public String getTitle()
