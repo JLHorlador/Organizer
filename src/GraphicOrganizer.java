@@ -105,12 +105,6 @@ public class GraphicOrganizer {
 	File thursdayFile;
 	File fridayFile;
 	
-	boolean mondayFileExists;
-	boolean tuesdayFileExists;
-	boolean wednesdayFileExists;
-	boolean thursdayFileExists;
-	boolean fridayFileExists;
-	
 	public GraphicOrganizer() throws Exception
 	{	
 		noteFile = new File("NoteList.txt");
@@ -121,90 +115,9 @@ public class GraphicOrganizer {
 		thursdayFile = new File("ThursdayClasses.txt");
 		fridayFile = new File("FridayClasses.txt");
 		
-		mondayFileExists = mondayFile.exists();
-		tuesdayFileExists = tuesdayFile.exists();
-		wednesdayFileExists = wednesdayFile.exists();
-		thursdayFileExists = thursdayFile.exists();
-		fridayFileExists = fridayFile.exists();
+		loadOrganizer();		//load any saved changes made in the previous session
 		
-		if (!noteFile.exists())
-			noteFile.createNewFile();
-		else
-		{
-			//read from the file
-			BufferedReader noteReader = new BufferedReader(new FileReader(noteFile));
-			
-			String noteLine;
-			String[] noteArray;
-			while ((noteLine = noteReader.readLine()) != null)
-			{
-				noteArray = new String[0];
-				noteArray = noteLine.split("<Space>");
-				createNewNoteObject(noteArray[0], noteArray[1], noteArray[2], noteArray[3], noteArray[4]);
-			}
-			noteReader.close();
-		}
-		
-		if (!activityFile.exists())
-			activityFile.createNewFile();
-		else
-		{
-			//read from the file
-			BufferedReader activityReader = new BufferedReader(new FileReader(activityFile));
-			
-			String activityLine;
-			String[] activityArray;
-			while ((activityLine = activityReader.readLine()) != null)
-			{
-				activityArray = new String[0];
-				activityArray = activityLine.split("<Space>");
-				createNewActivityObject(activityArray[0], activityArray[1], activityArray[2], activityArray[3],
-						activityArray[4], activityArray[5], activityArray[6], activityArray[7], activityArray[8], 
-						activityArray[9], activityArray[10], activityArray[11], activityArray[12], activityArray[13]);
-			}
-			activityReader.close();
-		}
-		
-		if (!mondayFileExists)
-			mondayFile.createNewFile();
-		else
-		{
-			//read from the file
-			BufferedReader mondayReader = new BufferedReader(new FileReader(mondayFile));
-			
-			String mondayLine;
-			String[] mondayArray;
-			while ((mondayLine = mondayReader.readLine()) != null)
-			{
-				mondayArray = new String[0];
-				mondayArray = mondayLine.split("<Space>");
-				createNewMondayObject(mondayArray[0], mondayArray[1], mondayArray[2], mondayArray[3], 
-						mondayArray[4], mondayArray[5], mondayArray[6], mondayArray[7]);
-			}
-			mondayReader.close();
-		}
-		
-		if (!tuesdayFileExists)
-			tuesdayFile.createNewFile();
-		else;
-			//read from the file
-		
-		if (!wednesdayFileExists)
-			wednesdayFile.createNewFile();
-		else;
-			//read from the file
-		
-		if (!thursdayFileExists)
-			thursdayFile.createNewFile();
-		else;
-			//read from the file
-		
-		if (!fridayFileExists)
-			fridayFile.createNewFile();
-		else;
-			//read from the file
-		
-		screens = new Stack<Integer>();
+		screens = new Stack<Integer>();		//keeps track of the previous screen 
 		
 		organizerFrame = new JFrame("Graphic Organizer");	//create a new window titled "Graphic Organizer"
 		organizerFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -236,11 +149,12 @@ public class GraphicOrganizer {
 		infoPanel.setLayout(new GridBagLayout());
 		//infoPanel.setBorder(BorderFactory.createMatteBorder(1, 0, 0, 0, Color.BLACK));		//display border limits
 		
+		//implementation of scrolling if the number of notes, activities, or classes in the info panel exceeds the size of the window
 		infoPanelScroll = new JScrollPane(infoPanel);
 		infoPanel.setAutoscrolls(true);
 		infoPanelScroll.setPreferredSize(new Dimension(800, 300));
 		
-		flexiblePanel.add(infoPanelScroll, BorderLayout.CENTER);
+		flexiblePanel.add(infoPanelScroll, BorderLayout.CENTER);		//add the scrolling implementation
 		
 		//create the save button
 		saveButton = new JButton("Save");
@@ -248,9 +162,10 @@ public class GraphicOrganizer {
 		{
 			public void actionPerformed(ActionEvent e)
 			{
+				//gives the save button the ability to save
 				try
 				{
-				saveProgress();
+					saveProgress();		//calls the method to save changes
 				}
 				catch (Exception except)
 				{
@@ -274,20 +189,22 @@ public class GraphicOrganizer {
 		{
 			public void actionPerformed(ActionEvent e)
 			{
+				//shows the previous screen if the player presses this button
 				returnPreviousScreen();
 			}
 		});
-		backButton.setVisible(false);
+		backButton.setVisible(false);		//hide the button initially
 		
 		//add action button
-		actionButton = new JButton();
+		actionButton = new JButton();		//the button that allows the user to add or remove notes, activities, or classes
 		actionButton.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
+				//the if statements nested in these if statements prevents the program from displaying the same screen twice if trying to go back
 				if (actionButton.getText().equals("Add Note"))
 				{
-					if (screens.peek() != 3)	//checks if the previous screen is not the same as the current screen being displayed
+					if (screens.peek() != 3)	//checks if the previous screen is not the same as the current screen
 					{
 						screens.push(3);		//3 indicates that the previous screen displays the class notes
 						clearPanel();
@@ -296,7 +213,7 @@ public class GraphicOrganizer {
 				}
 				else if (actionButton.getText().equals("Add Activity"))
 				{
-					if (screens.peek() != 4)	//checks if the previous screen is not the same as the current screen
+					if (screens.peek() != 4)
 					{
 						screens.push(4);		//4 indicates that the previous screen displays the activities list
 						clearPanel();
@@ -307,49 +224,49 @@ public class GraphicOrganizer {
 				{
 					if (screens.peek() != 13)
 					{
-						screens.push(13);
+						screens.push(13);		//13 indicates that the previous screen displays the list of classes
 						clearPanel();
 						newClassDetails();
 					}
 				}
 				else if (actionButton.getText().equals("Add New Note"))
 				{
-					createNewNoteObject();
-					returnPreviousScreen();
+					createNewNoteObject();		//calls the method to create a new note
+					returnPreviousScreen();		//returns to the note list screen (to show that a new note has been created)
 				}
 				else if (actionButton.getText().equals("Add New Activity"))
 				{
-					createNewActivityObject();
-					returnPreviousScreen();
+					createNewActivityObject();		//calls the method to create a new activity
+					returnPreviousScreen();		//returns to the activity list screen (to show that a new activity has been created)
 				}
 				else if (actionButton.getText().equals("Add " + classDayText + " Class"))
 				{
-					createNewClassObject();
-					returnPreviousScreen();
+					createNewClassObject();		//calls the method to create a new class
+					returnPreviousScreen();		//returns to the class list screen (to show that a new class has been created)
 				}
 				else if (actionButton.getText().equals("Remove Note"))
 				{
-					removeNote();
-					clearStack();
+					removeNote();		//removes the currently selected note
+					clearStack();		//clears the screens stack
 					screens.push(1);		//1 indicates that the screen will display class notes
-					clearPanel();
+					clearPanel();		//clears the panel
 					showClassNotes();		//display class notes
-					saveField.setText("");
+					saveField.setText("");		//clears the save field text to show that a change has been made
 				}
 				else if (actionButton.getText().equals("Remove Activity"))
 				{
-					removeActivity();
-					clearStack();
+					removeActivity();		//removes the currently selected activity
+					clearStack();		//clears the screens stack
 					screens.push(2);		//2 indicates that the screen displays activities
-					clearPanel();
+					clearPanel();		//clears the panel
 					showActivities();		//show activities
-					saveField.setText("");
+					saveField.setText("");		//clears the save field to show that a change has been made
 				}
 				else if (actionButton.getText().equals("Remove Class"))
 				{
-					removeClass();
-					returnPreviousScreen();
-					saveField.setText("");
+					removeClass();		//removes the currently selected class
+					returnPreviousScreen();		//returns to the previous screen
+					saveField.setText("");		//clears the save field to show that a change has been made
 				}
 			}
 		});
@@ -380,6 +297,7 @@ public class GraphicOrganizer {
 		{
 			public void mouseClicked(MouseEvent e)
 			{
+				//clear the note title text box if no change has been made
 				if (noteTitle.isEnabled() && noteTitle.getText().equals("Enter title of note here"))
 					noteTitle.setText("");
 			}
@@ -393,6 +311,7 @@ public class GraphicOrganizer {
 		{
 			public void mouseClicked(MouseEvent e)
 			{
+				//clear the note info text box if no change has been made
 				if (noteInfo.isEnabled() && noteInfo.getText().equals("Enter note info here"))
 					noteInfo.setText("");
 			}
@@ -407,9 +326,9 @@ public class GraphicOrganizer {
 			{
 				if (screens.isEmpty() || screens.peek() != 1)	//checks if the previous screen does not display the class notes
 				{
-					clearStack();
+					clearStack();		//clears the screens stack
 					screens.push(1);		//1 indicates that the screen will display class notes
-					clearPanel();
+					clearPanel();		//clears the panel
 					showClassNotes();		//display class notes
 				}
 			}
@@ -437,55 +356,55 @@ public class GraphicOrganizer {
 		
 		activityFromYear = new JTextField("YYYY");						//displays four Y's
 		activityFromYear.setColumns(5);
-		activityFromYear.setHorizontalAlignment(JTextField.CENTER);
+		activityFromYear.setHorizontalAlignment(JTextField.CENTER);		//centers the text
 		
 		activityTo = new JTextField("To: ");
-		activityTo.setOpaque(false);
-		activityTo.setDisabledTextColor(Color.BLACK);
-		activityTo.setBorder(null);;
-		activityTo.setEnabled(false);
+		activityTo.setOpaque(false);		//removes white box background
+		activityTo.setDisabledTextColor(Color.BLACK);		//sets the text color to black if the box is disabled
+		activityTo.setBorder(null);		//removes the border
+		activityTo.setEnabled(false);		//initially disable it
 		
 		activityToMonth = new JTextField("MM");
 		activityToMonth.setColumns(4);
-		activityToMonth.setHorizontalAlignment(JTextField.CENTER);
+		activityToMonth.setHorizontalAlignment(JTextField.CENTER);		//centers the text
 		
 		activityToDay = new JTextField("DD");
 		activityToDay.setColumns(4);
-		activityToDay.setHorizontalAlignment(JTextField.CENTER);
+		activityToDay.setHorizontalAlignment(JTextField.CENTER);		//centers the text
 		
 		activityToYear = new JTextField("YYYY");
 		activityToYear.setColumns(5);
-		activityToYear.setHorizontalAlignment(JTextField.CENTER);
+		activityToYear.setHorizontalAlignment(JTextField.CENTER);		//centers the text
 		
 		activityStart = new JTextField("Start: ");
-		activityStart.setOpaque(false);
-		activityStart.setDisabledTextColor(Color.BLACK);
-		activityStart.setBorder(null);
-		activityStart.setEnabled(false);
+		activityStart.setOpaque(false);		//removes white box background
+		activityStart.setDisabledTextColor(Color.BLACK);		//sets the text color to black if the box is disabled
+		activityStart.setBorder(null);		//removes the border
+		activityStart.setEnabled(false);		//initially disable it
 		
 		activityStartHour = new JTextField("HH");
 		activityStartHour.setColumns(4);
-		activityStartHour.setHorizontalAlignment(JTextField.CENTER);
+		activityStartHour.setHorizontalAlignment(JTextField.CENTER);		//centers the text
 		
 		activityStartMinute = new JTextField("MM");
 		activityStartMinute.setColumns(4);
-		activityStartMinute.setHorizontalAlignment(JTextField.CENTER);
+		activityStartMinute.setHorizontalAlignment(JTextField.CENTER);		//centers the text
 		
 		activityStartTOD = new JComboBox<String>(timeOfDay);		//time of day drop box for activity start
 		
 		activityEnd = new JTextField("End: ");
-		activityEnd.setOpaque(false);
-		activityEnd.setDisabledTextColor(Color.BLACK);
-		activityEnd.setBorder(null);
-		activityEnd.setEnabled(false);
+		activityEnd.setOpaque(false);		//removes white box background
+		activityEnd.setDisabledTextColor(Color.BLACK);		//sets the text color to black if the box is disabled
+		activityEnd.setBorder(null);		//removes the border
+		activityEnd.setEnabled(false);		//initially disable it
 		
 		activityEndHour = new JTextField("HH");
 		activityEndHour.setColumns(4);
-		activityEndHour.setHorizontalAlignment(JTextField.CENTER);
+		activityEndHour.setHorizontalAlignment(JTextField.CENTER);		//centers the text
 		
 		activityEndMinute = new JTextField("MM");
 		activityEndMinute.setColumns(4);
-		activityEndMinute.setHorizontalAlignment(JTextField.CENTER);
+		activityEndMinute.setHorizontalAlignment(JTextField.CENTER);		//centers the text
 		
 		activityEndTOD = new JComboBox<String>(timeOfDay);			//time of day drop box for activity end
 		
@@ -495,6 +414,7 @@ public class GraphicOrganizer {
 		{
 			public void mouseClicked(MouseEvent e)
 			{
+				//clear the activity title text box if no change has been made
 				if (activityTitle.isEnabled() && activityTitle.getText().equals("Enter title of activity here"))
 					activityTitle.setText("");
 			}
@@ -508,6 +428,7 @@ public class GraphicOrganizer {
 		{
 			public void mouseClicked(MouseEvent e)
 			{
+				//clear the activity info text box if no change has been made
 				if (activityInfo.isEnabled() && activityInfo.getText().equals("Enter activity info here"))
 					activityInfo.setText("");
 			}
@@ -521,9 +442,9 @@ public class GraphicOrganizer {
 			{
 				if (screens.isEmpty() || screens.peek() != 2)	//checks if the previous screen does not display the activities 
 				{
-					clearStack();
+					clearStack();		//clears the screen stack
 					screens.push(2);		//2 indicates that the screen displays activities
-					clearPanel();
+					clearPanel();		//clears the panel
 					showActivities();		//show activities
 				}
 			}
@@ -540,10 +461,10 @@ public class GraphicOrganizer {
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				screens.push(8);
-				classDayText = "Monday";
-				clearPanel();
-				showClasses();
+				screens.push(8);		//8 indicates that the screen displays classes
+				classDayText = "Monday";		//indicates that the chosen day is monday
+				clearPanel();		//clears the panel
+				showClasses();		//shows monday classes
 			}
 		});
 		mondayButton.setPreferredSize(new Dimension(150, 60));
@@ -553,10 +474,10 @@ public class GraphicOrganizer {
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				screens.push(8);
-				classDayText = "Tuesday";
-				clearPanel();
-				showClasses();
+				screens.push(8);		//8 indicates that the screen displays classes
+				classDayText = "Tuesday";		//indicates that the chosen day is tuesday
+				clearPanel();		//clears the panel
+				showClasses();		//shows tuesday classes
 			}
 		});
 		tuesdayButton.setPreferredSize(new Dimension(150, 60));
@@ -566,10 +487,10 @@ public class GraphicOrganizer {
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				screens.push(8);
-				classDayText = "Wednesday";
-				clearPanel();
-				showClasses();
+				screens.push(8);		//8 indicates that the screen displays classes
+				classDayText = "Wednesday";		//indicates that the chosen day is wednesday
+				clearPanel();		//clears the panel
+				showClasses();		//shows wednesday classes
 			}
 		});
 		wednesdayButton.setPreferredSize(new Dimension(150, 60));
@@ -579,10 +500,10 @@ public class GraphicOrganizer {
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				screens.push(8);
-				classDayText = "Thursday";
-				clearPanel();
-				showClasses();
+				screens.push(8);		//8 indicates that the screen displays classes
+				classDayText = "Thursday";		//indicates that the chosen day is thursday
+				clearPanel();		//clears the panel
+				showClasses();		//shows thursday classes
 			}
 		});
 		thursdayButton.setPreferredSize(new Dimension(150, 60));
@@ -592,47 +513,47 @@ public class GraphicOrganizer {
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				screens.push(8);
-				classDayText = "Friday";
-				clearPanel();
-				showClasses();
+				screens.push(8);		//8 indicates that te screen displays classes
+				classDayText = "Friday";		//indicates that the chosen day is friday
+				clearPanel();		//clears the panel
+				showClasses();		//shows friday classes
 			}
 		});
 		fridayButton.setPreferredSize(new Dimension(150, 60));
 		
 		classStart = new JTextField("Start: ");
-		classStart.setOpaque(false);
-		classStart.setDisabledTextColor(Color.BLACK);
-		classStart.setBorder(null);
-		classStart.setEnabled(false);
+		classStart.setOpaque(false);		//removes white box background
+		classStart.setDisabledTextColor(Color.BLACK);		//sets text color to black if the box is disabled
+		classStart.setBorder(null);		//removes border
+		classStart.setEnabled(false);		//initially disable the text box
 		
 		classStartHour = new JTextField("HH");
 		classStartHour.setColumns(4);
-		classStartHour.setHorizontalAlignment(JTextField.CENTER);
-		classStartHour.setDisabledTextColor(Color.BLACK);
+		classStartHour.setHorizontalAlignment(JTextField.CENTER);		//centers the text
+		classStartHour.setDisabledTextColor(Color.BLACK);		//sets text color to black if the box is disabled
 		
 		classStartMinute = new JTextField("MM");
 		classStartMinute.setColumns(4);
-		classStartMinute.setHorizontalAlignment(JTextField.CENTER);
-		classStartMinute.setDisabledTextColor(Color.BLACK);
+		classStartMinute.setHorizontalAlignment(JTextField.CENTER);		//centers the text
+		classStartMinute.setDisabledTextColor(Color.BLACK);		//sets the text color to black if the box is disabled
 		
 		classStartTOD = new JComboBox<String>(timeOfDay);
 		
 		classEnd = new JTextField("End: ");
-		classEnd.setOpaque(false);
-		classEnd.setDisabledTextColor(Color.BLACK);
-		classEnd.setBorder(null);
-		classEnd.setEnabled(false);
+		classEnd.setOpaque(false);		//removes white box background
+		classEnd.setDisabledTextColor(Color.BLACK);		//sets text color to black if the box is disabled
+		classEnd.setBorder(null);		//removes borders
+		classEnd.setEnabled(false);		//initially disables the text box
 		
 		classEndHour = new JTextField("HH");
 		classEndHour.setColumns(4);
-		classEndHour.setHorizontalAlignment(JTextField.CENTER);
-		classEndHour.setDisabledTextColor(Color.BLACK);
+		classEndHour.setHorizontalAlignment(JTextField.CENTER);		//centers the text
+		classEndHour.setDisabledTextColor(Color.BLACK);		//sets text color to black if the box is disabled
 		
 		classEndMinute = new JTextField("MM");
 		classEndMinute.setColumns(4);
-		classEndMinute.setHorizontalAlignment(JTextField.CENTER);
-		classEndMinute.setDisabledTextColor(Color.BLACK);
+		classEndMinute.setHorizontalAlignment(JTextField.CENTER);		//centers the text
+		classEndMinute.setDisabledTextColor(Color.BLACK);		//sets text color to black if the box is disabled
 		
 		classEndTOD = new JComboBox<String>(timeOfDay);
 		
@@ -642,6 +563,7 @@ public class GraphicOrganizer {
 		{
 			public void mouseClicked(MouseEvent e)
 			{
+				//clears the class location text box if no changes were made
 				if (classLocation.isEnabled() && classLocation.getText().equals("Enter class location here"))
 					classLocation.setText("");
 			}
@@ -654,6 +576,7 @@ public class GraphicOrganizer {
 		{
 			public void mouseClicked(MouseEvent e)
 			{
+				//clears the class title text box if no changes were made
 				if (classTitle.isEnabled() && classTitle.getText().equals("Enter class name here"))
 					classTitle.setText("");
 			}
@@ -661,10 +584,10 @@ public class GraphicOrganizer {
 		classTitle.setDisabledTextColor(Color.BLACK);
 		
 		classSchedule = new JTextField("Class Schedule");
-		classSchedule.setOpaque(false);
-		classSchedule.setDisabledTextColor(Color.BLACK);
-		classSchedule.setBorder(null);
-		classSchedule.setEnabled(false);
+		classSchedule.setOpaque(false);		//removes white box background
+		classSchedule.setDisabledTextColor(Color.BLACK);		//sets text color to black if the text box is disabled
+		classSchedule.setBorder(null);		//removes borders
+		classSchedule.setEnabled(false);		//initially disable the text box
 		
 		//add schedule button
 		scheduleButton = new JButton("Schedule");
@@ -674,10 +597,10 @@ public class GraphicOrganizer {
 			{
 				if (screens.isEmpty() || screens.peek() != 5)
 				{
-					clearStack();
-					screens.push(5);
-					clearPanel();
-					showClassDays();
+					clearStack();		//clears the screen stack
+					screens.push(5);		//5 indicates that the current screen shows class days
+					clearPanel();		//clears the panel
+					showClassDays();		//shows the class days
 				}
 			}
 		});
@@ -692,11 +615,11 @@ public class GraphicOrganizer {
 		GBLayout.fill = 0;
 		GBLayout.ipady = 0;
 		
-		organizerFrame.add(topPanel, BorderLayout.PAGE_START);
-		organizerFrame.add(buttonPanel, BorderLayout.LINE_START);
-		organizerFrame.add(flexiblePanel, BorderLayout.CENTER);
+		organizerFrame.add(topPanel, BorderLayout.PAGE_START);		//adds the top panel at the very top
+		organizerFrame.add(buttonPanel, BorderLayout.LINE_START);		//adds the button panel to the left
+		organizerFrame.add(flexiblePanel, BorderLayout.CENTER);		//centers the flexible panel
 		organizerFrame.pack();
-		organizerFrame.setVisible(true);
+		organizerFrame.setVisible(true);		//shows the window
 		organizerFrame.setMinimumSize(new Dimension(800, 450));
 	}
 	
@@ -1242,11 +1165,26 @@ public class GraphicOrganizer {
 		*/
 	}
 	
-	private void createNewMondayObject(String startHour, String startMinute, String startTOD, String endHour, 
-			String endMinute, String endTOD, String location, String title)		//use for loading monday classes
+	private void createNewClassObject(String startHour, String startMinute, String startTOD, String endHour, 
+			String endMinute, String endTOD, String location, String title)
 	{
-		mondayClasses.add(new NewClassScheduleObject(startHour, startMinute, startTOD, endHour, endMinute, endTOD,
-				location, title));
+
+		if (classDayText.equals("Monday"))
+			mondayClasses.add(new NewClassScheduleObject(startHour, startMinute, startTOD, endHour, endMinute, endTOD,
+					location, title));
+		else if (classDayText.equals("Tuesday"))
+			tuesdayClasses.add(new NewClassScheduleObject(startHour, startMinute, startTOD, endHour, endMinute, endTOD,
+					location, title));
+		else if (classDayText.equals("Wednesday"))
+			wednesdayClasses.add(new NewClassScheduleObject(startHour, startMinute, startTOD, endHour, endMinute, endTOD,
+					location, title));
+		else if (classDayText.equals("Thursday"))
+			thursdayClasses.add(new NewClassScheduleObject(startHour, startMinute, startTOD, endHour, endMinute, endTOD,
+					location, title));
+		else if (classDayText.equals("Friday"))
+			fridayClasses.add(new NewClassScheduleObject(startHour, startMinute, startTOD, endHour, endMinute, endTOD,
+					location, title));
+			
 	}
 	
 	private void returnPreviousScreen()
@@ -1265,27 +1203,27 @@ public class GraphicOrganizer {
 		}
 		else if (screens.peek() == 1)
 		{
-			showClassNotes();
+			showClassNotes();		//show notes
 		}
 		else if (screens.peek() == 2)
 		{
-			showActivities();
+			showActivities();		//show activities
 		}
 		else if (screens.peek() == 3)
 		{
-			newNoteDetails();
+			newNoteDetails();		//shows the text fields of a selected note
 		}
 		else if (screens.peek() == 4)
 		{
-			newActivityDetails();
+			newActivityDetails();		//shows the text fields of a selected activity
 		}
 		else if (screens.peek() == 5)
 		{
-			showClassDays();
+			showClassDays();		//show the class days
 		}
 		else if (screens.peek() == 8)
 		{
-			showClasses();
+			showClasses();		//show the classes
 		}
 	}
 	
@@ -1333,24 +1271,6 @@ public class GraphicOrganizer {
 		
 		index = 0;
 	}
-	
-	/*
-	private static void resetGridBagConstraints()
-	{
-		GridBagConstraints GBLayout = new GridBagConstraints();
-		GBLayout.gridx = 0;
-		GBLayout.gridy = 0;
-		GBLayout.insets = new Insets(0,0,0,0);
-		GBLayout.fill = 0;
-		GBLayout.ipady = 0;
-		GBLayout.anchor = 0;
-		GBLayout.gridwidth = 0;
-		GBLayout.gridheight = 0;
-		GBLayout.weightx = 0;
-		GBLayout.weighty = 0;
-		
-	}
-	*/
 	
 	public void saveProgress() throws Exception
 	{
@@ -1421,31 +1341,245 @@ public class GraphicOrganizer {
 		activityWriter.close();
 		
 		//record the classes for monday
-		PrintWriter mondayWriter = new PrintWriter(mondayFile);
+		PrintWriter classWriter = new PrintWriter(mondayFile);
 		
 		for (int i = 0; i < mondayClasses.size(); i++)
 		{
-			mondayWriter.write(mondayClasses.get(i).getStartHour());
-			mondayWriter.write("<Space>");
-			mondayWriter.write(mondayClasses.get(i).getStartMinute());
-			mondayWriter.write("<Space>");
-			mondayWriter.write(mondayClasses.get(i).getStartTOD());
-			mondayWriter.write("<Space>");
-			mondayWriter.write(mondayClasses.get(i).getEndHour());
-			mondayWriter.write("<Space>");
-			mondayWriter.write(mondayClasses.get(i).getEndMinute());
-			mondayWriter.write("<Space>");
-			mondayWriter.write(mondayClasses.get(i).getEndTOD());
-			mondayWriter.write("<Space>");
-			mondayWriter.write(mondayClasses.get(i).getLocation());
-			mondayWriter.write("<Space>");
-			mondayWriter.write(mondayClasses.get(i).getTitle());
-			mondayWriter.write("<Space>");
-			mondayWriter.println();
+			classWriter.write(mondayClasses.get(i).getStartHour());
+			classWriter.write("<Space>");
+			classWriter.write(mondayClasses.get(i).getStartMinute());
+			classWriter.write("<Space>");
+			classWriter.write(mondayClasses.get(i).getStartTOD());
+			classWriter.write("<Space>");
+			classWriter.write(mondayClasses.get(i).getEndHour());
+			classWriter.write("<Space>");
+			classWriter.write(mondayClasses.get(i).getEndMinute());
+			classWriter.write("<Space>");
+			classWriter.write(mondayClasses.get(i).getEndTOD());
+			classWriter.write("<Space>");
+			classWriter.write(mondayClasses.get(i).getLocation());
+			classWriter.write("<Space>");
+			classWriter.write(mondayClasses.get(i).getTitle());
+			classWriter.write("<Space>");
+			classWriter.println();
 		}
-		mondayWriter.close();
+		classWriter.close();
+		
+		classWriter = new PrintWriter(tuesdayFile);
+		
+		for (int i = 0; i < tuesdayClasses.size(); i++)
+		{
+			classWriter.write(tuesdayClasses.get(i).getStartHour());
+			classWriter.write("<Space>");
+			classWriter.write(tuesdayClasses.get(i).getStartMinute());
+			classWriter.write("<Space>");
+			classWriter.write(tuesdayClasses.get(i).getStartTOD());
+			classWriter.write("<Space>");
+			classWriter.write(tuesdayClasses.get(i).getEndHour());
+			classWriter.write("<Space>");
+			classWriter.write(tuesdayClasses.get(i).getEndMinute());
+			classWriter.write("<Space>");
+			classWriter.write(tuesdayClasses.get(i).getEndTOD());
+			classWriter.write("<Space>");
+			classWriter.write(tuesdayClasses.get(i).getLocation());
+			classWriter.write("<Space>");
+			classWriter.write(tuesdayClasses.get(i).getTitle());
+			classWriter.write("<Space>");
+			classWriter.println();
+		}
+		classWriter.close();
+		
+		classWriter = new PrintWriter(wednesdayFile);
+		
+		for (int i = 0; i < wednesdayClasses.size(); i++)
+		{
+			classWriter.write(wednesdayClasses.get(i).getStartHour());
+			classWriter.write("<Space>");
+			classWriter.write(wednesdayClasses.get(i).getStartMinute());
+			classWriter.write("<Space>");
+			classWriter.write(wednesdayClasses.get(i).getStartTOD());
+			classWriter.write("<Space>");
+			classWriter.write(wednesdayClasses.get(i).getEndHour());
+			classWriter.write("<Space>");
+			classWriter.write(wednesdayClasses.get(i).getEndMinute());
+			classWriter.write("<Space>");
+			classWriter.write(wednesdayClasses.get(i).getEndTOD());
+			classWriter.write("<Space>");
+			classWriter.write(wednesdayClasses.get(i).getLocation());
+			classWriter.write("<Space>");
+			classWriter.write(wednesdayClasses.get(i).getTitle());
+			classWriter.write("<Space>");
+			classWriter.println();
+		}
+		classWriter.close();
+		
+		classWriter = new PrintWriter(thursdayFile);
+		
+		for (int i = 0; i < thursdayClasses.size(); i++)
+		{
+			classWriter.write(thursdayClasses.get(i).getStartHour());
+			classWriter.write("<Space>");
+			classWriter.write(thursdayClasses.get(i).getStartMinute());
+			classWriter.write("<Space>");
+			classWriter.write(thursdayClasses.get(i).getStartTOD());
+			classWriter.write("<Space>");
+			classWriter.write(thursdayClasses.get(i).getEndHour());
+			classWriter.write("<Space>");
+			classWriter.write(thursdayClasses.get(i).getEndMinute());
+			classWriter.write("<Space>");
+			classWriter.write(thursdayClasses.get(i).getEndTOD());
+			classWriter.write("<Space>");
+			classWriter.write(thursdayClasses.get(i).getLocation());
+			classWriter.write("<Space>");
+			classWriter.write(thursdayClasses.get(i).getTitle());
+			classWriter.write("<Space>");
+			classWriter.println();
+		}
+		classWriter.close();
+		
+		classWriter = new PrintWriter(fridayFile);
+		
+		for (int i = 0; i < fridayClasses.size(); i++)
+		{
+			classWriter.write(fridayClasses.get(i).getStartHour());
+			classWriter.write("<Space>");
+			classWriter.write(fridayClasses.get(i).getStartMinute());
+			classWriter.write("<Space>");
+			classWriter.write(fridayClasses.get(i).getStartTOD());
+			classWriter.write("<Space>");
+			classWriter.write(fridayClasses.get(i).getEndHour());
+			classWriter.write("<Space>");
+			classWriter.write(fridayClasses.get(i).getEndMinute());
+			classWriter.write("<Space>");
+			classWriter.write(fridayClasses.get(i).getEndTOD());
+			classWriter.write("<Space>");
+			classWriter.write(fridayClasses.get(i).getLocation());
+			classWriter.write("<Space>");
+			classWriter.write(fridayClasses.get(i).getTitle());
+			classWriter.write("<Space>");
+			classWriter.println();
+		}
+		classWriter.close();
 
 		saveField.setText("Progress has been saved.");
+	}
+	
+	private void loadOrganizer() throws Exception
+	{
+		if (!noteFile.exists())
+			noteFile.createNewFile();
+		else
+		{
+			//read from the file
+			BufferedReader noteReader = new BufferedReader(new FileReader(noteFile));
+			
+			String noteLine;
+			String[] noteArray;
+			while ((noteLine = noteReader.readLine()) != null)
+			{
+				noteArray = new String[0];
+				noteArray = noteLine.split("<Space>");
+				createNewNoteObject(noteArray[0], noteArray[1], noteArray[2], noteArray[3], noteArray[4]);
+			}
+			noteReader.close();
+		}
+		
+		if (!activityFile.exists())
+			activityFile.createNewFile();
+		else
+		{
+			//read from the file
+			BufferedReader activityReader = new BufferedReader(new FileReader(activityFile));
+			
+			String activityLine;
+			String[] activityArray;
+			while ((activityLine = activityReader.readLine()) != null)
+			{
+				activityArray = new String[0];
+				activityArray = activityLine.split("<Space>");
+				createNewActivityObject(activityArray[0], activityArray[1], activityArray[2], activityArray[3],
+						activityArray[4], activityArray[5], activityArray[6], activityArray[7], activityArray[8], 
+						activityArray[9], activityArray[10], activityArray[11], activityArray[12], activityArray[13]);
+			}
+			activityReader.close();
+		}
+		
+		if (!mondayFile.exists())
+			mondayFile.createNewFile();
+
+		if (!tuesdayFile.exists())
+			tuesdayFile.createNewFile();
+		
+		if (!wednesdayFile.exists())
+			wednesdayFile.createNewFile();
+		
+		if (!thursdayFile.exists())
+			thursdayFile.createNewFile();
+		
+		if (!fridayFile.exists())
+			fridayFile.createNewFile();
+		
+		//read from the file
+		BufferedReader classReader;
+			
+		String classLine;
+		String[] classArray;
+		
+		classReader = new BufferedReader(new FileReader(mondayFile));
+		
+		classDayText = "Monday";
+		while ((classLine = classReader.readLine()) != null)
+		{
+			classArray = new String[0];
+			classArray = classLine.split("<Space>");
+			createNewClassObject(classArray[0], classArray[1], classArray[2], classArray[3], 
+					classArray[4], classArray[5], classArray[6], classArray[7]);
+		}
+		classReader.close();
+		
+		classReader = new BufferedReader(new FileReader(tuesdayFile));
+		classDayText = "Tuesday";
+		while ((classLine = classReader.readLine()) != null)
+		{
+			classArray = new String[0];
+			classArray = classLine.split("<Space>");
+			createNewClassObject(classArray[0], classArray[1], classArray[2], classArray[3], 
+					classArray[4], classArray[5], classArray[6], classArray[7]);
+		}
+		classReader.close();
+		
+		classReader = new BufferedReader(new FileReader(wednesdayFile));
+		classDayText = "Wednesday";
+		while ((classLine = classReader.readLine()) != null)
+		{
+			classArray = new String[0];
+			classArray = classLine.split("<Space>");
+			createNewClassObject(classArray[0], classArray[1], classArray[2], classArray[3], 
+					classArray[4], classArray[5], classArray[6], classArray[7]);
+		}
+		classReader.close();
+		
+		classReader = new BufferedReader(new FileReader(thursdayFile));
+		classDayText = "Thursday";
+		while ((classLine = classReader.readLine()) != null)
+		{
+			classArray = new String[0];
+			classArray = classLine.split("<Space>");
+			createNewClassObject(classArray[0], classArray[1], classArray[2], classArray[3], 
+					classArray[4], classArray[5], classArray[6], classArray[7]);
+		}
+		classReader.close();
+		
+		classReader = new BufferedReader(new FileReader(fridayFile));
+		classDayText = "Friday";
+		while ((classLine = classReader.readLine()) != null)
+		{
+			classArray = new String[0];
+			classArray = classLine.split("<Space>");
+			createNewClassObject(classArray[0], classArray[1], classArray[2], classArray[3], 
+					classArray[4], classArray[5], classArray[6], classArray[7]);
+		}
+		classReader.close();
 	}
 	
 	public static void main(String[] args) throws Exception
