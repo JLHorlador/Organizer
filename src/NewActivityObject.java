@@ -2,6 +2,7 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
+import javax.swing.UIManager;
 
 public class NewActivityObject 
 {
@@ -49,55 +50,47 @@ public class NewActivityObject
 		{
 			public void actionPerformed(ActionEvent e)
 			{	
+				UIManager.put("ComboBox.disabledForeground", Color.BLACK);
+				
 				GraphicOrganizer.clearPanel();
 				GraphicOrganizer.newActivityDetails();
 				GraphicOrganizer.screens.push(7);
 				GraphicOrganizer.index = numberIndex;
 				GraphicOrganizer.actionButton.setText("Remove Activity");
 				
-				GraphicOrganizer.activityFromMonth.setText(fromMonth);
+				GraphicOrganizer.activityFromMonth.setSelectedItem(fromMonth);
 				GraphicOrganizer.activityFromMonth.setEnabled(false);
-				GraphicOrganizer.activityFromMonth.setDisabledTextColor(Color.BLACK);
 				
-				GraphicOrganizer.activityFromDay.setText(fromDay);
+				GraphicOrganizer.activityFromDay.setSelectedItem(fromDay);
 				GraphicOrganizer.activityFromDay.setEnabled(false);
-				GraphicOrganizer.activityFromDay.setDisabledTextColor(Color.BLACK);
 				
-				GraphicOrganizer.activityFromYear.setText(fromYear);
+				GraphicOrganizer.activityFromYear.setSelectedItem(fromYear);
 				GraphicOrganizer.activityFromYear.setEnabled(false);
-				GraphicOrganizer.activityFromYear.setDisabledTextColor(Color.BLACK);
 				
-				GraphicOrganizer.activityToMonth.setText(toMonth);
+				GraphicOrganizer.activityToMonth.setSelectedItem(toMonth);
 				GraphicOrganizer.activityToMonth.setEnabled(false);
-				GraphicOrganizer.activityToMonth.setDisabledTextColor(Color.BLACK);
 				
-				GraphicOrganizer.activityToDay.setText(toDay);
+				GraphicOrganizer.activityToDay.setSelectedItem(toDay);
 				GraphicOrganizer.activityToDay.setEnabled(false);
-				GraphicOrganizer.activityToDay.setDisabledTextColor(Color.BLACK);
 				
-				GraphicOrganizer.activityToYear.setText(toYear);
+				GraphicOrganizer.activityToYear.setSelectedItem(toYear);
 				GraphicOrganizer.activityToYear.setEnabled(false);
-				GraphicOrganizer.activityToYear.setDisabledTextColor(Color.BLACK);
 				
-				GraphicOrganizer.activityStartHour.setText(startHour);
+				GraphicOrganizer.activityStartHour.setSelectedItem(startHour);
 				GraphicOrganizer.activityStartHour.setEnabled(false);
-				GraphicOrganizer.activityStartHour.setDisabledTextColor(Color.BLACK);
 				
-				GraphicOrganizer.activityStartMinute.setText(startMinute);
+				GraphicOrganizer.activityStartMinute.setSelectedItem(startMinute);
 				GraphicOrganizer.activityStartMinute.setEnabled(false);
-				GraphicOrganizer.activityStartMinute.setDisabledTextColor(Color.BLACK);
 				
 				GraphicOrganizer.activityStartTOD.setSelectedItem(startTOD);
 				GraphicOrganizer.activityStartTOD.setEnabled(false);
 				GraphicOrganizer.activityStartTOD.setForeground(Color.BLACK);
 				
-				GraphicOrganizer.activityEndHour.setText(endHour);
+				GraphicOrganizer.activityEndHour.setSelectedItem(endHour);
 				GraphicOrganizer.activityEndHour.setEnabled(false);
-				GraphicOrganizer.activityEndHour.setDisabledTextColor(Color.BLACK);
 				
-				GraphicOrganizer.activityEndMinute.setText(endMinute);
+				GraphicOrganizer.activityEndMinute.setSelectedItem(endMinute);
 				GraphicOrganizer.activityEndMinute.setEnabled(false);
-				GraphicOrganizer.activityEndMinute.setDisabledTextColor(Color.BLACK);
 				
 				GraphicOrganizer.activityEndTOD.setSelectedItem(endTOD);
 				GraphicOrganizer.activityEndTOD.setEnabled(false);

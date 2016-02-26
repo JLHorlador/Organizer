@@ -2,6 +2,7 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
+import javax.swing.UIManager;
 
 public class NewNoteObject 
 {
@@ -34,23 +35,22 @@ public class NewNoteObject
 		{
 			public void actionPerformed(ActionEvent e)
 			{
+				UIManager.put("ComboBox.disabledForeground", Color.BLACK);
+				
 				GraphicOrganizer.clearPanel();
 				GraphicOrganizer.newNoteDetails();
 				GraphicOrganizer.screens.push(6);
 				GraphicOrganizer.index = numberIndex;
 				GraphicOrganizer.actionButton.setText("Remove Note");
 				
-				GraphicOrganizer.noteDateMonth.setText(month);
+				GraphicOrganizer.noteDateMonth.setSelectedItem(month);
 				GraphicOrganizer.noteDateMonth.setEnabled(false);
-				GraphicOrganizer.noteDateMonth.setDisabledTextColor(Color.BLACK);
 				
-				GraphicOrganizer.noteDateDay.setText(day);
+				GraphicOrganizer.noteDateDay.setSelectedItem(day);
 				GraphicOrganizer.noteDateDay.setEnabled(false);
-				GraphicOrganizer.noteDateDay.setDisabledTextColor(Color.BLACK);
 				
-				GraphicOrganizer.noteDateYear.setText(year);
+				GraphicOrganizer.noteDateYear.setSelectedItem(year);
 				GraphicOrganizer.noteDateYear.setEnabled(false);
-				GraphicOrganizer.noteDateYear.setDisabledTextColor(Color.BLACK);
 				
 				GraphicOrganizer.noteTitle.setText(title);
 				GraphicOrganizer.noteTitle.setEnabled(false);

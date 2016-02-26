@@ -2,6 +2,7 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
+import javax.swing.UIManager;
 
 public class NewClassScheduleObject 
 {
@@ -41,25 +42,27 @@ public class NewClassScheduleObject
 		{
 			public void actionPerformed(ActionEvent e)
 			{
+				UIManager.put("ComboBox.disabledForeground", Color.BLACK);
+				
 				GraphicOrganizer.clearPanel();
 				GraphicOrganizer.newClassDetails();
 				GraphicOrganizer.screens.push(14);
 				GraphicOrganizer.index = numberIndex;
 				GraphicOrganizer.actionButton.setText("Remove Class");
 				
-				GraphicOrganizer.classStartHour.setText(startHour);
+				GraphicOrganizer.classStartHour.setSelectedItem(startHour);
 				GraphicOrganizer.classStartHour.setEnabled(false);
 				
-				GraphicOrganizer.classStartMinute.setText(startMinute);
+				GraphicOrganizer.classStartMinute.setSelectedItem(startMinute);
 				GraphicOrganizer.classStartMinute.setEnabled(false);
 				
 				GraphicOrganizer.classStartTOD.setSelectedItem(startTOD);
 				GraphicOrganizer.classStartTOD.setEnabled(false);
 				
-				GraphicOrganizer.classEndHour.setText(endHour);
+				GraphicOrganizer.classEndHour.setSelectedItem(endHour);
 				GraphicOrganizer.classEndHour.setEnabled(false);
 				
-				GraphicOrganizer.classEndMinute.setText(endMinute);
+				GraphicOrganizer.classEndMinute.setSelectedItem(endMinute);
 				GraphicOrganizer.classEndMinute.setEnabled(false);
 				
 				GraphicOrganizer.classEndTOD.setSelectedItem(endTOD);

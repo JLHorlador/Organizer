@@ -5,7 +5,6 @@ import java.util.Stack;
 import java.util.ArrayList;
 import java.io.File;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.io.BufferedReader;
 
@@ -22,7 +21,7 @@ public class GraphicOrganizer {
 	private JButton classButton;		//the class notes button
 	private JButton activitiesButton;	//the activities button
 	private JButton scheduleButton;		//the schedule button
-	public static JButton actionButton;		//the button on top of the flexible panel (name to be determined)
+	public static JButton actionButton;		//the button on top of the flexible panel 
 	public static JButton backButton;			//the button to return to the previous screen
 	private JButton mondayButton;		//monday button for the schedule
 	private JButton tuesdayButton;		//tuesday button for the schedule
@@ -32,31 +31,31 @@ public class GraphicOrganizer {
 	
 	private JTextField saveField;			//the JTextField that will display whether the user has saved their progress
 	
-	private static JTextField noteDate;			//displays where the note's date input boxes are
-	public static JTextField noteDateMonth;		//the JTextField that will take the input for the note's month date
-	public static JTextField noteDateDay;			//the JTextField that will take the input for the note's day date
-	public static JTextField noteDateYear;		//the JTextField that will take the input for the note's year date
+	private static JTextField noteDate;			//the label that displays where the note's date input boxes are
+	public static JComboBox<String> noteDateMonth;		//the drop down box that will take the input for the note's month date
+	public static JComboBox<String> noteDateDay;			//the drop down box that will take the input for the note's day date
+	public static JComboBox<String> noteDateYear;		//the drop down box that will take the input for the note's year date
 	public static JTextField noteTitle;			//the JTextField that will take the input for the note's title
 	public static JTextArea noteInfo;				//the JTextField that will take the input for the note's information
 	
-	private static JTextField activityFrom;		//displays where the activity's start date input boxes are
-	public static JTextField activityFromMonth;	//the JTextField that will take input for the month the activity starts
-	public static JTextField activityFromDay;		//the JTextField that will take input for the day the activity starts
-	public static JTextField activityFromYear;	//the JTextField that will take input for the year the activity starts
+	private static JTextField activityFrom;		//the label that displays where the activity's start date input boxes are
+	public static JComboBox<String> activityFromMonth;	//the drop down box that will take input for the month the activity starts
+	public static JComboBox<String> activityFromDay;		//the drop down box that will take input for the day the activity starts
+	public static JComboBox<String> activityFromYear;	//the drop down box that will take input for the year the activity starts
 	
-	private static JTextField activityTo;			//displays where the activity's end date input boxes are
-	public static JTextField activityToMonth;		//the JTextField that will take the input for the month the activity ends
-	public static JTextField activityToDay;		//the JTextField that will take the input for the day the activity ends
-	public static JTextField activityToYear;		//the JTextField that will take the input for the year the activity ends
+	private static JTextField activityTo;			//the label that displays where the activity's end date input boxes are
+	public static JComboBox<String> activityToMonth;		//the drop down box that will take the input for the month the activity ends
+	public static JComboBox<String> activityToDay;		//the drop down box that will take the input for the day the activity ends
+	public static JComboBox<String> activityToYear;		//the drop down box that will take the input for the year the activity ends
 	
-	private static JTextField activityStart;				//displays where the activity's beginning time input boxes are
-	public static JTextField activityStartHour;			//the JTextField that will take the input for the hour the activity starts
-	public static JTextField activityStartMinute;			//the JTextField that will take the input for the minute the activity starts
+	private static JTextField activityStart;				//the label that displays where the activity's beginning time input boxes are
+	public static JComboBox<String> activityStartHour;			//the drop down box that will take the input for the hour the activity starts
+	public static JComboBox<String> activityStartMinute;			//the drop down box that will take the input for the minute the activity starts
 	public static JComboBox<String> activityStartTOD;		//the drop down box that will take the input for the time of day the activity starts
 	
-	private static JTextField activityEnd;					//displays where the activity's end time input boxes are
-	public static JTextField activityEndHour;				//the JTextField that will take the input for the hour the activity ends
-	public static JTextField activityEndMinute;			//the JTextField that will take the input for the minute the activity ends
+	private static JTextField activityEnd;					//the label that displays where the activity's end time input boxes are
+	public static JComboBox<String> activityEndHour;				//the drop down box that will take the input for the hour the activity ends
+	public static JComboBox<String> activityEndMinute;			//the drop down box that will take the input for the minute the activity ends
 	public static JComboBox<String> activityEndTOD;		//the drop down box that will take the input for the time of day the activity ends
 	
 	public static JTextField activityTitle;		//the JTextField that will take the input for the activity's title
@@ -64,14 +63,14 @@ public class GraphicOrganizer {
 	
 	private JTextField classSchedule;		//the JTextField to indicate that the screen shows the class days
 	
-	public static JTextField classStart;				//indicates where the class's beginning time input boxes are
-	public static JTextField classStartHour;			//the JTextField that will take the input for the hour the class starts
-	public static JTextField classStartMinute;		//the JTextField that will take the input for the minute the class starts
+	public static JTextField classStart;				//the label that indicates where the class's beginning time input boxes are
+	public static JComboBox<String> classStartHour;			//the drop down box that will take the input for the hour the class starts
+	public static JComboBox<String> classStartMinute;		//the drop down box that will take the input for the minute the class starts
 	public static JComboBox<String> classStartTOD;	//the drop down box to choose what time of day the class takes place
 	
-	public static JTextField classEnd;				//indicates where the class's end time input boxes are
-	public static JTextField classEndHour;			//the JTextField that will take the input for the hour the class ends
-	public static JTextField classEndMinute;			//the JTextField that will take the input for the minute the class ends
+	public static JTextField classEnd;				//the label that indicates where the class's end time input boxes are
+	public static JComboBox<String> classEndHour;			//the drop down box that will take the input for the hour the class ends
+	public static JComboBox<String> classEndMinute;			//the drop down box that will take the input for the minute the class ends
 	public static JComboBox<String> classEndTOD;		//the drop down box to choose what time of day the class takes place
 	
 	public static JTextField classLocation;		//the JTextField that takes the input for the class location
@@ -82,6 +81,21 @@ public class GraphicOrganizer {
 	private static String classDayText = "";		//contains the word of the chosen day in the schedule
 	
 	String[] timeOfDay = {"AM", "PM"};
+	String[] months = {"MM", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"};
+	String[] days = {"DD", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12",
+			"13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26",
+			"27", "28", "29", "30", "31"};
+	//String[] februaryDays = {"DD", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12",
+			//"13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26",
+			//"27", "28", "29"};
+	String[] years = {"YYYY", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025"};
+	String[] hours = {"HH", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"};
+	String[] minutes = {"MM", "00", "01", "02", "03", "04", "05", "06", "07", "08", "09", 
+			"10", "11", "12", "13", "14", "15", "16", "17", "18", "19",
+			"20", "21", "22", "23", "24", "25", "26", "27", "28", "29",
+			"30", "31", "32", "33", "34", "35", "36", "37", "38", "39",
+			"40", "41", "42", "43", "44", "45", "46", "47", "48", "49",
+			"50", "51", "52", "53", "54", "55", "56", "57", "58", "59"};
 	
 	ArrayList<NewNoteObject> noteObject = new ArrayList<NewNoteObject>();
 	ArrayList<NewActivityObject> activityObject = new ArrayList<NewActivityObject>();
@@ -279,17 +293,11 @@ public class GraphicOrganizer {
 		noteDate.setBorder(null);						//removes imprinted border
 		noteDate.setEnabled(false);						//disables text field
 		
-		noteDateMonth = new JTextField("MM");						//displays two large M's
-		noteDateMonth.setColumns(4);
-		noteDateMonth.setHorizontalAlignment(JTextField.CENTER);	//centers text
+		noteDateMonth = new JComboBox<String>(months);						//displays two large M's
 		
-		noteDateDay = new JTextField("DD");		//displays two large D's
-		noteDateDay.setColumns(4);
-		noteDateDay.setHorizontalAlignment(JTextField.CENTER);		//centers text
+		noteDateDay = new JComboBox<String>(days);		//displays two large D's
 		
-		noteDateYear = new JTextField("YYYY");						//displays four large Y's
-		noteDateYear.setColumns(5);
-		noteDateYear.setHorizontalAlignment(JTextField.CENTER);		//centers text
+		noteDateYear = new JComboBox<String>(years);						//displays four large Y's
 		
 		noteTitle = new JTextField("Enter title of note here");				//displays where to enter the title
 		noteTitle.setBorder(BorderFactory.createLineBorder(Color.BLACK));	//sets a black border around the field
@@ -346,17 +354,11 @@ public class GraphicOrganizer {
 		activityFrom.setBorder(null);						//removes border
 		activityFrom.setEnabled(false);						//disables field
 		
-		activityFromMonth = new JTextField("MM");						//displays two M's
-		activityFromMonth.setColumns(4);
-		activityFromMonth.setHorizontalAlignment(JTextField.CENTER);	//centers text
+		activityFromMonth = new JComboBox<String>(months);						//displays two M's
 		
-		activityFromDay = new JTextField("DD");							//displays two D's
-		activityFromDay.setColumns(4);
-		activityFromDay.setHorizontalAlignment(JTextField.CENTER);		//centers text
+		activityFromDay = new JComboBox<String>(days);							//displays two D's
 		
-		activityFromYear = new JTextField("YYYY");						//displays four Y's
-		activityFromYear.setColumns(5);
-		activityFromYear.setHorizontalAlignment(JTextField.CENTER);		//centers the text
+		activityFromYear = new JComboBox<String>(years);						//displays four Y's
 		
 		activityTo = new JTextField("To: ");
 		activityTo.setOpaque(false);		//removes white box background
@@ -364,17 +366,11 @@ public class GraphicOrganizer {
 		activityTo.setBorder(null);		//removes the border
 		activityTo.setEnabled(false);		//initially disable it
 		
-		activityToMonth = new JTextField("MM");
-		activityToMonth.setColumns(4);
-		activityToMonth.setHorizontalAlignment(JTextField.CENTER);		//centers the text
+		activityToMonth = new JComboBox<String>(months);
 		
-		activityToDay = new JTextField("DD");
-		activityToDay.setColumns(4);
-		activityToDay.setHorizontalAlignment(JTextField.CENTER);		//centers the text
+		activityToDay = new JComboBox<String>(days);
 		
-		activityToYear = new JTextField("YYYY");
-		activityToYear.setColumns(5);
-		activityToYear.setHorizontalAlignment(JTextField.CENTER);		//centers the text
+		activityToYear = new JComboBox<String>(years);
 		
 		activityStart = new JTextField("Start: ");
 		activityStart.setOpaque(false);		//removes white box background
@@ -382,13 +378,9 @@ public class GraphicOrganizer {
 		activityStart.setBorder(null);		//removes the border
 		activityStart.setEnabled(false);		//initially disable it
 		
-		activityStartHour = new JTextField("HH");
-		activityStartHour.setColumns(4);
-		activityStartHour.setHorizontalAlignment(JTextField.CENTER);		//centers the text
+		activityStartHour = new JComboBox<String>(hours);
 		
-		activityStartMinute = new JTextField("MM");
-		activityStartMinute.setColumns(4);
-		activityStartMinute.setHorizontalAlignment(JTextField.CENTER);		//centers the text
+		activityStartMinute = new JComboBox<String>(minutes);
 		
 		activityStartTOD = new JComboBox<String>(timeOfDay);		//time of day drop box for activity start
 		
@@ -398,13 +390,9 @@ public class GraphicOrganizer {
 		activityEnd.setBorder(null);		//removes the border
 		activityEnd.setEnabled(false);		//initially disable it
 		
-		activityEndHour = new JTextField("HH");
-		activityEndHour.setColumns(4);
-		activityEndHour.setHorizontalAlignment(JTextField.CENTER);		//centers the text
+		activityEndHour = new JComboBox<String>(hours);
 		
-		activityEndMinute = new JTextField("MM");
-		activityEndMinute.setColumns(4);
-		activityEndMinute.setHorizontalAlignment(JTextField.CENTER);		//centers the text
+		activityEndMinute = new JComboBox<String>(minutes);
 		
 		activityEndTOD = new JComboBox<String>(timeOfDay);			//time of day drop box for activity end
 		
@@ -527,15 +515,9 @@ public class GraphicOrganizer {
 		classStart.setBorder(null);		//removes border
 		classStart.setEnabled(false);		//initially disable the text box
 		
-		classStartHour = new JTextField("HH");
-		classStartHour.setColumns(4);
-		classStartHour.setHorizontalAlignment(JTextField.CENTER);		//centers the text
-		classStartHour.setDisabledTextColor(Color.BLACK);		//sets text color to black if the box is disabled
+		classStartHour = new JComboBox<String>(hours);
 		
-		classStartMinute = new JTextField("MM");
-		classStartMinute.setColumns(4);
-		classStartMinute.setHorizontalAlignment(JTextField.CENTER);		//centers the text
-		classStartMinute.setDisabledTextColor(Color.BLACK);		//sets the text color to black if the box is disabled
+		classStartMinute = new JComboBox<String>(minutes);
 		
 		classStartTOD = new JComboBox<String>(timeOfDay);
 		
@@ -545,15 +527,9 @@ public class GraphicOrganizer {
 		classEnd.setBorder(null);		//removes borders
 		classEnd.setEnabled(false);		//initially disables the text box
 		
-		classEndHour = new JTextField("HH");
-		classEndHour.setColumns(4);
-		classEndHour.setHorizontalAlignment(JTextField.CENTER);		//centers the text
-		classEndHour.setDisabledTextColor(Color.BLACK);		//sets text color to black if the box is disabled
+		classEndHour = new JComboBox<String>(hours);
 		
-		classEndMinute = new JTextField("MM");
-		classEndMinute.setColumns(4);
-		classEndMinute.setHorizontalAlignment(JTextField.CENTER);		//centers the text
-		classEndMinute.setDisabledTextColor(Color.BLACK);		//sets text color to black if the box is disabled
+		classEndMinute = new JComboBox<String>(minutes);
 		
 		classEndTOD = new JComboBox<String>(timeOfDay);
 		
@@ -866,17 +842,15 @@ public class GraphicOrganizer {
 		infoPanel.add(noteDate, GBLayout);
 		
 		GBLayout.gridx = 1;		//place to the right of the noteDate
-		noteDateMonth.setText("MM");	//reset textfield
+		//noteDateMonth.setText("MM");	//reset textfield
 		noteDateMonth.setEnabled(true);
 		infoPanel.add(noteDateMonth, GBLayout);
 		
 		GBLayout.gridx = 2;		//place two cells right of the noteDate
-		noteDateDay.setText("DD");
 		noteDateDay.setEnabled(true);
 		infoPanel.add(noteDateDay, GBLayout);
 		
-		GBLayout.gridx = 3;		//place three cells to the right of the noteDate
-		noteDateYear.setText("YYYY");
+		GBLayout.gridx = 3;		//place three cells to the right of the noteDate\
 		noteDateYear.setEnabled(true);
 		infoPanel.add(noteDateYear, GBLayout);
 		
@@ -931,17 +905,14 @@ public class GraphicOrganizer {
 		infoPanel.add(activityFrom, GBLayout);
 		
 		GBLayout.gridx = 1;
-		activityFromMonth.setText("MM");
 		activityFromMonth.setEnabled(true);
 		infoPanel.add(activityFromMonth, GBLayout);
 		
 		GBLayout.gridx = 2;
-		activityFromDay.setText("DD");
 		activityFromDay.setEnabled(true);
 		infoPanel.add(activityFromDay, GBLayout);
 		
 		GBLayout.gridx = 3;
-		activityFromYear.setText("YYYY");
 		activityFromYear.setEnabled(true);
 		infoPanel.add(activityFromYear, GBLayout);
 		
@@ -952,17 +923,14 @@ public class GraphicOrganizer {
 		infoPanel.add(activityTo, GBLayout);
 		
 		GBLayout.gridx = 1;
-		activityToMonth.setText("MM");
 		activityToMonth.setEnabled(true);
 		infoPanel.add(activityToMonth, GBLayout);
 		
 		GBLayout.gridx = 2;
-		activityToDay.setText("DD");
 		activityToDay.setEnabled(true);
 		infoPanel.add(activityToDay, GBLayout);
 		
 		GBLayout.gridx = 3;
-		activityToYear.setText("YYYY");
 		activityToYear.setEnabled(true);
 		infoPanel.add(activityToYear, GBLayout);
 		
@@ -972,12 +940,10 @@ public class GraphicOrganizer {
 		infoPanel.add(activityStart, GBLayout);
 		
 		GBLayout.gridx = 1;
-		activityStartHour.setText("HH");
 		activityStartHour.setEnabled(true);
 		infoPanel.add(activityStartHour, GBLayout);
 		
 		GBLayout.gridx = 2;
-		activityStartMinute.setText("MM");
 		activityStartMinute.setEnabled(true);
 		infoPanel.add(activityStartMinute, GBLayout);
 		
@@ -991,12 +957,10 @@ public class GraphicOrganizer {
 		infoPanel.add(activityEnd, GBLayout);
 		
 		GBLayout.gridx = 1;
-		activityEndHour.setText("HH");
 		activityEndHour.setEnabled(true);
 		infoPanel.add(activityEndHour, GBLayout);
 		
 		GBLayout.gridx = 2;
-		activityEndMinute.setText("MM");
 		activityEndMinute.setEnabled(true);
 		infoPanel.add(activityEndMinute, GBLayout);
 		
@@ -1047,12 +1011,10 @@ public class GraphicOrganizer {
 		infoPanel.add(classStart, GBLayout);
 		
 		GBLayout.gridx = 1;
-		classStartHour.setText("HH");
 		classStartHour.setEnabled(true);
 		infoPanel.add(classStartHour, GBLayout);
 		
 		GBLayout.gridx = 2;
-		classStartMinute.setText("MM");
 		classStartMinute.setEnabled(true);
 		infoPanel.add(classStartMinute, GBLayout);
 		
@@ -1065,12 +1027,10 @@ public class GraphicOrganizer {
 		infoPanel.add(classEnd, GBLayout);
 		
 		GBLayout.gridx = 1;
-		classEndHour.setText("HH");
 		classEndHour.setEnabled(true);
 		infoPanel.add(classEndHour, GBLayout);
 		
 		GBLayout.gridx = 2;
-		classEndMinute.setText("MM");
 		classEndMinute.setEnabled(true);
 		infoPanel.add(classEndMinute, GBLayout);
 		
@@ -1102,8 +1062,8 @@ public class GraphicOrganizer {
 	
 	public void createNewNoteObject()
 	{
-		noteObject.add(new NewNoteObject(noteDateMonth.getText(), noteDateDay.getText(), noteDateYear.getText(), 
-				noteTitle.getText(), noteInfo.getText()));
+		noteObject.add(new NewNoteObject(noteDateMonth.getSelectedItem().toString(), noteDateDay.getSelectedItem().toString(), 
+				noteDateYear.getSelectedItem().toString(), noteTitle.getText(), noteInfo.getText()));
 		
 		saveField.setText("");
 	}
@@ -1115,10 +1075,10 @@ public class GraphicOrganizer {
 	
 	public void createNewActivityObject()
 	{
-		activityObject.add(new NewActivityObject(activityFromMonth.getText(), activityFromDay.getText(), 
-				activityFromYear.getText(), activityToMonth.getText(), activityToDay.getText(), 
-				activityToYear.getText(), activityStartHour.getText(), activityStartMinute.getText(), 
-				activityStartTOD.getSelectedItem(), activityEndHour.getText(), activityEndMinute.getText(),
+		activityObject.add(new NewActivityObject(activityFromMonth.getSelectedItem().toString(), activityFromDay.getSelectedItem().toString(), 
+				activityFromYear.getSelectedItem().toString(), activityToMonth.getSelectedItem().toString(), activityToDay.getSelectedItem().toString(), 
+				activityToYear.getSelectedItem().toString(), activityStartHour.getSelectedItem().toString(), activityStartMinute.getSelectedItem().toString(), 
+				activityStartTOD.getSelectedItem(), activityEndHour.getSelectedItem().toString(), activityEndMinute.getSelectedItem().toString(),
 				activityEndTOD.getSelectedItem(), activityTitle.getText(), activityInfo.getText()));
 		
 		saveField.setText("");
@@ -1135,24 +1095,24 @@ public class GraphicOrganizer {
 	public void createNewClassObject()
 	{
 		if (classDayText.equals("Monday"))
-			mondayClasses.add(new NewClassScheduleObject(classStartHour.getText(), classStartMinute.getText(),
-					classStartTOD.getSelectedItem(), classEndHour.getText(), classEndMinute.getText(), 
+			mondayClasses.add(new NewClassScheduleObject(classStartHour.getSelectedItem().toString(), classStartMinute.getSelectedItem().toString(),
+					classStartTOD.getSelectedItem(), classEndHour.getSelectedItem().toString(), classEndMinute.getSelectedItem().toString(), 
 					classEndTOD.getSelectedItem(), classLocation.getText(), classTitle.getText()));
 		else if (classDayText.equals("Tuesday"))
-			tuesdayClasses.add(new NewClassScheduleObject(classStartHour.getText(), classStartMinute.getText(),
-					classStartTOD.getSelectedItem(), classEndHour.getText(), classEndMinute.getText(), 
+			tuesdayClasses.add(new NewClassScheduleObject(classStartHour.getSelectedItem().toString(), classStartMinute.getSelectedItem().toString(),
+					classStartTOD.getSelectedItem(), classEndHour.getSelectedItem().toString(), classEndMinute.getSelectedItem().toString(), 
 					classEndTOD.getSelectedItem(), classLocation.getText(), classTitle.getText()));
 		else if (classDayText.equals("Wednesday"))
-			wednesdayClasses.add(new NewClassScheduleObject(classStartHour.getText(), classStartMinute.getText(),
-					classStartTOD.getSelectedItem(), classEndHour.getText(), classEndMinute.getText(), 
+			wednesdayClasses.add(new NewClassScheduleObject(classStartHour.getSelectedItem().toString(), classStartMinute.getSelectedItem().toString(),
+					classStartTOD.getSelectedItem(), classEndHour.getSelectedItem().toString(), classEndMinute.getSelectedItem().toString(), 
 					classEndTOD.getSelectedItem(), classLocation.getText(), classTitle.getText()));
 		else if (classDayText.equals("Thursday"))
-			thursdayClasses.add(new NewClassScheduleObject(classStartHour.getText(), classStartMinute.getText(),
-					classStartTOD.getSelectedItem(), classEndHour.getText(), classEndMinute.getText(), 
+			thursdayClasses.add(new NewClassScheduleObject(classStartHour.getSelectedItem().toString(), classStartMinute.getSelectedItem().toString(),
+					classStartTOD.getSelectedItem(), classEndHour.getSelectedItem().toString(), classEndMinute.getSelectedItem().toString(), 
 					classEndTOD.getSelectedItem(), classLocation.getText(), classTitle.getText()));
 		else if (classDayText.equals("Friday"))
-			fridayClasses.add(new NewClassScheduleObject(classStartHour.getText(), classStartMinute.getText(),
-					classStartTOD.getSelectedItem(), classEndHour.getText(), classEndMinute.getText(), 
+			fridayClasses.add(new NewClassScheduleObject(classStartHour.getSelectedItem().toString(), classStartMinute.getSelectedItem().toString(),
+					classStartTOD.getSelectedItem(), classEndHour.getSelectedItem().toString(), classEndMinute.getSelectedItem().toString(), 
 					classEndTOD.getSelectedItem(), classLocation.getText(), classTitle.getText()));
 		
 		saveField.setText("");
@@ -1462,6 +1422,7 @@ public class GraphicOrganizer {
 		classWriter.close();
 
 		saveField.setText("Progress has been saved.");
+		JOptionPane.showMessageDialog(null, "Progress has been saved.", null, JOptionPane.INFORMATION_MESSAGE);		//make a pop up window when saved
 	}
 	
 	private void loadOrganizer() throws Exception
