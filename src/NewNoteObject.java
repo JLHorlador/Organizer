@@ -1,7 +1,9 @@
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.UIManager;
 
 public class NewNoteObject 
@@ -28,9 +30,16 @@ public class NewNoteObject
 		numberIndex = number;
 	}
 	
+	public JLabel createLabel()
+	{
+		JLabel dateLabel = new JLabel(month + "/" + day + "/" + year);
+		return dateLabel;
+	}
+	
 	public JButton createButton()
 	{
 		JButton newNoteButton = new JButton(title);
+		newNoteButton.setPreferredSize(new Dimension(570, 20));
 		newNoteButton.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)

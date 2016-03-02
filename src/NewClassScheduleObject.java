@@ -1,7 +1,9 @@
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.UIManager;
 
 public class NewClassScheduleObject 
@@ -35,9 +37,16 @@ public class NewClassScheduleObject
 		numberIndex = number;
 	}
 	
+	public JLabel createLabel()
+	{
+		JLabel durationLabel = new JLabel(startHour + ":" + startMinute + " " + startTOD + " - " + endHour + ":" + endMinute + " " + endTOD);
+		return durationLabel;
+	}
+	
 	public JButton createButton()
 	{
 		JButton newClassButton = new JButton(title);
+		newClassButton.setPreferredSize(new Dimension(570, 20));
 		newClassButton.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)

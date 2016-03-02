@@ -1,7 +1,11 @@
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.UIManager;
 
 public class NewActivityObject 
@@ -43,9 +47,16 @@ public class NewActivityObject
 		numberIndex = 0;
 	}
 	
+	public JLabel createLabel()
+	{
+		JLabel dateLabel = new JLabel(fromMonth + "/" + fromDay + "/" + fromYear + " - " + toMonth + "/" + toDay + "/" + toYear);
+		return dateLabel;
+	}
+	
 	public JButton createButton()
 	{
 		JButton newActivityButton = new JButton(title);
+		newActivityButton.setPreferredSize(new Dimension(570, 20));
 		newActivityButton.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)

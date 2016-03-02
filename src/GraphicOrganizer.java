@@ -85,9 +85,6 @@ public class GraphicOrganizer {
 	String[] days = {"DD", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12",
 			"13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26",
 			"27", "28", "29", "30", "31"};
-	//String[] februaryDays = {"DD", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12",
-			//"13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26",
-			//"27", "28", "29"};
 	String[] years = {"YYYY", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025"};
 	String[] hours = {"HH", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"};
 	String[] minutes = {"MM", "00", "01", "02", "03", "04", "05", "06", "07", "08", "09", 
@@ -617,14 +614,15 @@ public class GraphicOrganizer {
 		backButton.setVisible(true);
 		actionButton.setVisible(true);
 		
-		GBLayout.anchor = GridBagConstraints.NORTH;
-		GBLayout.fill = GridBagConstraints.HORIZONTAL;
-		GBLayout.insets = new Insets(10, 10, 10, 10);
-		
 		for (int i = 0; i < noteObject.size(); i++)
 		{
 			GBLayout.gridy = i;
 			noteObject.get(i).setIndex(i);
+			GBLayout.anchor = GridBagConstraints.WEST;
+			GBLayout.insets = new Insets(10, 50, 10, 0);
+			infoPanel.add(noteObject.get(i).createLabel(), GBLayout);
+			GBLayout.anchor = GridBagConstraints.EAST;
+			GBLayout.insets = new Insets(10, 0, 10, 50);
 			infoPanel.add(noteObject.get(i).createButton(), GBLayout);
 		}
 		
@@ -653,14 +651,15 @@ public class GraphicOrganizer {
 		backButton.setVisible(true);
 		actionButton.setVisible(true);
 		
-		GBLayout.anchor = GridBagConstraints.NORTH;
-		GBLayout.fill = GridBagConstraints.HORIZONTAL;
-		GBLayout.insets = new Insets(10, 10, 10, 10);
-		
 		for (int i = 0; i < activityObject.size(); i++)
 		{
 			GBLayout.gridy = i;
 			activityObject.get(i).setIndex(i);
+			GBLayout.anchor = GridBagConstraints.WEST;
+			GBLayout.insets = new Insets(10, 30, 10, 0);
+			infoPanel.add(activityObject.get(i).createLabel(), GBLayout);
+			GBLayout.anchor = GridBagConstraints.EAST;
+			GBLayout.insets = new Insets(10, 0, 10, 30);
 			infoPanel.add(activityObject.get(i).createButton(), GBLayout);
 		}
 		
@@ -742,10 +741,6 @@ public class GraphicOrganizer {
 		actionButton.setVisible(true);
 		actionPanel.add(actionButton, GBLayout);
 		
-		GBLayout.anchor = GridBagConstraints.NORTH;
-		GBLayout.fill = GridBagConstraints.HORIZONTAL;
-		GBLayout.insets = new Insets(10, 10, 10, 10);
-		
 		if (classDayText.equals("Monday"))
 		{
 			classDay.setText("Monday");
@@ -755,6 +750,11 @@ public class GraphicOrganizer {
 				{
 					GBLayout.gridy = i;
 					mondayClasses.get(i).setIndex(i);
+					GBLayout.anchor = GridBagConstraints.WEST;
+					GBLayout.insets = new Insets(10, 40, 10, 0);
+					infoPanel.add(mondayClasses.get(i).createLabel(), GBLayout);
+					GBLayout.anchor = GridBagConstraints.EAST;
+					GBLayout.insets = new Insets(10, 0, 10, 30);
 					infoPanel.add(mondayClasses.get(i).createButton(), GBLayout);
 				}
 			}
@@ -768,6 +768,11 @@ public class GraphicOrganizer {
 				{
 					GBLayout.gridy = i;
 					tuesdayClasses.get(i).setIndex(i);
+					GBLayout.anchor = GridBagConstraints.WEST;
+					GBLayout.insets = new Insets(10, 40, 10, 0);
+					infoPanel.add(tuesdayClasses.get(i).createLabel(), GBLayout);
+					GBLayout.anchor = GridBagConstraints.EAST;
+					GBLayout.insets = new Insets(10, 0, 10, 40);
 					infoPanel.add(tuesdayClasses.get(i).createButton(), GBLayout);
 				}
 			}
@@ -781,6 +786,11 @@ public class GraphicOrganizer {
 				{
 					GBLayout.gridy = i;
 					wednesdayClasses.get(i).setIndex(i);
+					GBLayout.anchor = GridBagConstraints.WEST;
+					GBLayout.insets = new Insets(10, 40, 10, 0);
+					infoPanel.add(wednesdayClasses.get(i).createLabel(), GBLayout);
+					GBLayout.anchor = GridBagConstraints.EAST;
+					GBLayout.insets = new Insets(10, 0, 10, 40);
 					infoPanel.add(wednesdayClasses.get(i).createButton(), GBLayout);
 				}
 			}
@@ -794,6 +804,11 @@ public class GraphicOrganizer {
 				{
 					GBLayout.gridy = i;
 					thursdayClasses.get(i).setIndex(i);
+					GBLayout.anchor = GridBagConstraints.WEST;
+					GBLayout.insets = new Insets(10, 40, 10, 0);
+					infoPanel.add(thursdayClasses.get(i).createLabel(), GBLayout);
+					GBLayout.anchor = GridBagConstraints.EAST;
+					GBLayout.insets = new Insets(10, 0, 10, 40);
 					infoPanel.add(thursdayClasses.get(i).createButton(), GBLayout);
 				}
 			}
@@ -807,6 +822,11 @@ public class GraphicOrganizer {
 				{
 					GBLayout.gridy = i;
 					fridayClasses.get(i).setIndex(i);
+					GBLayout.anchor = GridBagConstraints.WEST;
+					GBLayout.insets = new Insets(10, 40, 10, 0);
+					infoPanel.add(fridayClasses.get(i).createLabel(), GBLayout);
+					GBLayout.anchor = GridBagConstraints.EAST;
+					GBLayout.insets = new Insets(10, 0, 10, 40);
 					infoPanel.add(fridayClasses.get(i).createButton(), GBLayout);
 				}
 			}
@@ -843,14 +863,17 @@ public class GraphicOrganizer {
 		
 		GBLayout.gridx = 1;		//place to the right of the noteDate
 		//noteDateMonth.setText("MM");	//reset textfield
+		noteDateMonth.setSelectedIndex(0);
 		noteDateMonth.setEnabled(true);
 		infoPanel.add(noteDateMonth, GBLayout);
 		
 		GBLayout.gridx = 2;		//place two cells right of the noteDate
+		noteDateDay.setSelectedIndex(0);
 		noteDateDay.setEnabled(true);
 		infoPanel.add(noteDateDay, GBLayout);
 		
-		GBLayout.gridx = 3;		//place three cells to the right of the noteDate\
+		GBLayout.gridx = 3;		//place three cells to the right of the noteDate
+		noteDateYear.setSelectedIndex(0);
 		noteDateYear.setEnabled(true);
 		infoPanel.add(noteDateYear, GBLayout);
 		
@@ -905,14 +928,17 @@ public class GraphicOrganizer {
 		infoPanel.add(activityFrom, GBLayout);
 		
 		GBLayout.gridx = 1;
+		activityFromMonth.setSelectedIndex(0);
 		activityFromMonth.setEnabled(true);
 		infoPanel.add(activityFromMonth, GBLayout);
 		
 		GBLayout.gridx = 2;
+		activityFromDay.setSelectedIndex(0);
 		activityFromDay.setEnabled(true);
 		infoPanel.add(activityFromDay, GBLayout);
 		
 		GBLayout.gridx = 3;
+		activityFromYear.setSelectedIndex(0);
 		activityFromYear.setEnabled(true);
 		infoPanel.add(activityFromYear, GBLayout);
 		
@@ -923,14 +949,17 @@ public class GraphicOrganizer {
 		infoPanel.add(activityTo, GBLayout);
 		
 		GBLayout.gridx = 1;
+		activityToMonth.setSelectedIndex(0);
 		activityToMonth.setEnabled(true);
 		infoPanel.add(activityToMonth, GBLayout);
 		
 		GBLayout.gridx = 2;
+		activityToDay.setSelectedIndex(0);
 		activityToDay.setEnabled(true);
 		infoPanel.add(activityToDay, GBLayout);
 		
 		GBLayout.gridx = 3;
+		activityToYear.setSelectedIndex(0);
 		activityToYear.setEnabled(true);
 		infoPanel.add(activityToYear, GBLayout);
 		
@@ -940,14 +969,17 @@ public class GraphicOrganizer {
 		infoPanel.add(activityStart, GBLayout);
 		
 		GBLayout.gridx = 1;
+		activityStartHour.setSelectedIndex(0);
 		activityStartHour.setEnabled(true);
 		infoPanel.add(activityStartHour, GBLayout);
 		
 		GBLayout.gridx = 2;
+		activityStartMinute.setSelectedIndex(0);
 		activityStartMinute.setEnabled(true);
 		infoPanel.add(activityStartMinute, GBLayout);
 		
 		GBLayout.gridx = 3;
+		activityStartTOD.setSelectedIndex(0);
 		activityStartTOD.setEnabled(true);
 		infoPanel.add(activityStartTOD, GBLayout);
 		
@@ -957,14 +989,17 @@ public class GraphicOrganizer {
 		infoPanel.add(activityEnd, GBLayout);
 		
 		GBLayout.gridx = 1;
+		activityEndHour.setSelectedIndex(0);
 		activityEndHour.setEnabled(true);
 		infoPanel.add(activityEndHour, GBLayout);
 		
 		GBLayout.gridx = 2;
+		activityEndMinute.setSelectedIndex(0);
 		activityEndMinute.setEnabled(true);
 		infoPanel.add(activityEndMinute, GBLayout);
 		
 		GBLayout.gridx = 3;
+		activityEndTOD.setSelectedIndex(0);
 		activityEndTOD.setEnabled(true);
 		infoPanel.add(activityEndTOD, GBLayout);
 		
