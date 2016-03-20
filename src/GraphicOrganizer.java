@@ -80,29 +80,29 @@ public class GraphicOrganizer {
 
 	private static String classDayText = "";		//contains the word of the chosen day in the schedule
 	
-	String[] timeOfDay = {"AM", "PM"};
-	String[] months = {"MM", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"};
-	String[] days = {"DD", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12",
+	String[] timeOfDay = {"AM", "PM"};		//time of day options
+	String[] months = {"MM", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"};		//months options
+	String[] days = {"DD", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12",		//days options
 			"13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26",
 			"27", "28", "29", "30", "31"};
-	String[] years = {"YYYY", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025"};
-	String[] hours = {"HH", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"};
-	String[] minutes = {"MM", "00", "01", "02", "03", "04", "05", "06", "07", "08", "09", 
+	String[] years = {"YYYY", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025"};		//years options
+	String[] hours = {"HH", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"};		//hours options
+	String[] minutes = {"MM", "00", "01", "02", "03", "04", "05", "06", "07", "08", "09", 		//minutes options
 			"10", "11", "12", "13", "14", "15", "16", "17", "18", "19",
 			"20", "21", "22", "23", "24", "25", "26", "27", "28", "29",
 			"30", "31", "32", "33", "34", "35", "36", "37", "38", "39",
 			"40", "41", "42", "43", "44", "45", "46", "47", "48", "49",
 			"50", "51", "52", "53", "54", "55", "56", "57", "58", "59"};
 	
-	ArrayList<NewNoteObject> noteObject = new ArrayList<NewNoteObject>();
-	ArrayList<NewActivityObject> activityObject = new ArrayList<NewActivityObject>();
-	ArrayList<NewClassScheduleObject> mondayClasses = new ArrayList<NewClassScheduleObject>();
-	ArrayList<NewClassScheduleObject> tuesdayClasses = new ArrayList<NewClassScheduleObject>();
-	ArrayList<NewClassScheduleObject> wednesdayClasses = new ArrayList<NewClassScheduleObject>();
-	ArrayList<NewClassScheduleObject> thursdayClasses = new ArrayList<NewClassScheduleObject>();
-	ArrayList<NewClassScheduleObject> fridayClasses = new ArrayList<NewClassScheduleObject>();
+	ArrayList<NewNoteObject> noteObject = new ArrayList<NewNoteObject>();		//list of created notes
+	ArrayList<NewActivityObject> activityObject = new ArrayList<NewActivityObject>();		//list of created activities
+	ArrayList<NewClassScheduleObject> mondayClasses = new ArrayList<NewClassScheduleObject>();		//list of monday classes
+	ArrayList<NewClassScheduleObject> tuesdayClasses = new ArrayList<NewClassScheduleObject>();		//list of tuesday classes
+	ArrayList<NewClassScheduleObject> wednesdayClasses = new ArrayList<NewClassScheduleObject>();		//list of wednesday classes
+	ArrayList<NewClassScheduleObject> thursdayClasses = new ArrayList<NewClassScheduleObject>();		//list of thursday classes
+	ArrayList<NewClassScheduleObject> fridayClasses = new ArrayList<NewClassScheduleObject>();		//list of friday classes
 	
-	public static int index = 0;
+	public static int index = 0;		//used to keep track of the location of a created note/activity/class 
 	
 	GridBagConstraints GBLayout = new GridBagConstraints();	//create the GridBagConstraints
 	
@@ -116,8 +116,18 @@ public class GraphicOrganizer {
 	File thursdayFile;
 	File fridayFile;
 	
+	//variables used for password input
+	private boolean isRightUser;
+	private String passwordInput;
+	private String passwordMessage;
+	private int messageType;
+	
 	public GraphicOrganizer() throws Exception
 	{	
+		isRightUser = false;
+		passwordMessage = "Input Password:";
+		messageType = JOptionPane.WARNING_MESSAGE;
+		
 		noteFile = new File("NoteList.txt");
 		activityFile = new File("ActivityList.txt");
 		mondayFile = new File("MondayClasses.txt");
@@ -125,6 +135,20 @@ public class GraphicOrganizer {
 		wednesdayFile = new File("WednesdayClasses.txt");
 		thursdayFile = new File("ThursdayClasses.txt");
 		fridayFile = new File("FridayClasses.txt");
+		
+		while(!isRightUser)
+		{
+			passwordInput = JOptionPane.showInputDialog(null, passwordMessage, "Password Input", messageType);		//pops up input dialog box
+			if (passwordInput == null)		//if the user presses the cancel button or closes hte password input box, shut down the program
+				System.exit(1);
+			else if (passwordInput.equals("college2016"))		//if the input is the same as the password to get in, then start the program
+				isRightUser = true;		//breaks through the loop to continue running the program
+			else		//if input is incorrect, prompt the user to enter the correct password again
+			{
+				passwordMessage = "Invalid Password!\nInput Password:";
+				messageType = JOptionPane.ERROR_MESSAGE;
+			}
+		}
 		
 		loadOrganizer();		//load any saved changes made in the previous session
 		
@@ -614,7 +638,7 @@ public class GraphicOrganizer {
 		backButton.setVisible(true);
 		actionButton.setVisible(true);
 		
-		for (int i = 0; i < noteObject.size(); i++)
+		for (int i = 0; i < noteObject.size(); i++)		//show created notes in order of creation
 		{
 			GBLayout.gridy = i;
 			noteObject.get(i).setIndex(i);
@@ -651,7 +675,7 @@ public class GraphicOrganizer {
 		backButton.setVisible(true);
 		actionButton.setVisible(true);
 		
-		for (int i = 0; i < activityObject.size(); i++)
+		for (int i = 0; i < activityObject.size(); i++)		//show created activities in order of creation
 		{
 			GBLayout.gridy = i;
 			activityObject.get(i).setIndex(i);
@@ -741,6 +765,7 @@ public class GraphicOrganizer {
 		actionButton.setVisible(true);
 		actionPanel.add(actionButton, GBLayout);
 		
+		//show classes of a specific day in order of creation
 		if (classDayText.equals("Monday"))
 		{
 			classDay.setText("Monday");
@@ -1046,14 +1071,17 @@ public class GraphicOrganizer {
 		infoPanel.add(classStart, GBLayout);
 		
 		GBLayout.gridx = 1;
+		classStartHour.setSelectedIndex(0);
 		classStartHour.setEnabled(true);
 		infoPanel.add(classStartHour, GBLayout);
 		
 		GBLayout.gridx = 2;
+		classStartMinute.setSelectedIndex(0);
 		classStartMinute.setEnabled(true);
 		infoPanel.add(classStartMinute, GBLayout);
 		
 		GBLayout.gridx = 3;
+		classStartTOD.setSelectedIndex(0);
 		classStartTOD.setEnabled(true);
 		infoPanel.add(classStartTOD, GBLayout);
 		
@@ -1062,14 +1090,17 @@ public class GraphicOrganizer {
 		infoPanel.add(classEnd, GBLayout);
 		
 		GBLayout.gridx = 1;
+		classEndHour.setSelectedIndex(0);
 		classEndHour.setEnabled(true);
 		infoPanel.add(classEndHour, GBLayout);
 		
 		GBLayout.gridx = 2;
+		classEndMinute.setSelectedIndex(0);
 		classEndMinute.setEnabled(true);
 		infoPanel.add(classEndMinute, GBLayout);
 		
 		GBLayout.gridx = 3;
+		classEndTOD.setSelectedIndex(0);
 		classEndTOD.setEnabled(true);
 		infoPanel.add(classEndTOD, GBLayout);
 		
@@ -1095,7 +1126,7 @@ public class GraphicOrganizer {
 		actionPanel.repaint();
 	}
 	
-	public void createNewNoteObject()
+	public void createNewNoteObject()		//create a new note
 	{
 		noteObject.add(new NewNoteObject(noteDateMonth.getSelectedItem().toString(), noteDateDay.getSelectedItem().toString(), 
 				noteDateYear.getSelectedItem().toString(), noteTitle.getText(), noteInfo.getText()));
@@ -1108,7 +1139,7 @@ public class GraphicOrganizer {
 		noteObject.add(new NewNoteObject(month, day, year, title, info));
 	}
 	
-	public void createNewActivityObject()
+	public void createNewActivityObject()		//create a new activity
 	{
 		activityObject.add(new NewActivityObject(activityFromMonth.getSelectedItem().toString(), activityFromDay.getSelectedItem().toString(), 
 				activityFromYear.getSelectedItem().toString(), activityToMonth.getSelectedItem().toString(), activityToDay.getSelectedItem().toString(), 
@@ -1127,7 +1158,7 @@ public class GraphicOrganizer {
 				startMinute, startTOD, endHour, endMinute, endTOD, title, info));
 	}
 	
-	public void createNewClassObject()
+	public void createNewClassObject()		//create a class on a specific day
 	{
 		if (classDayText.equals("Monday"))
 			mondayClasses.add(new NewClassScheduleObject(classStartHour.getSelectedItem().toString(), classStartMinute.getSelectedItem().toString(),
@@ -1161,7 +1192,7 @@ public class GraphicOrganizer {
 	}
 	
 	private void createNewClassObject(String startHour, String startMinute, String startTOD, String endHour, 
-			String endMinute, String endTOD, String location, String title)
+			String endMinute, String endTOD, String location, String title)		//used for loading classes
 	{
 
 		if (classDayText.equals("Monday"))
@@ -1182,13 +1213,14 @@ public class GraphicOrganizer {
 			
 	}
 	
-	private void returnPreviousScreen()
+	private void returnPreviousScreen()		//the method to return to the previous screen
 	{
+		//top of the stack is the current screen, so it is popped off first
 		if (!screens.isEmpty())
 			screens.pop();
-		//System.out.println(screens);
+		//System.out.println(screens);		//debugging purposes
 		
-		clearPanel();
+		clearPanel();		//clears the panel
 		
 		if (screens.isEmpty())
 		{
@@ -1222,7 +1254,7 @@ public class GraphicOrganizer {
 		}
 	}
 	
-	public static void clearPanel()
+	public static void clearPanel()		//clears infoPanel and actionPanel
 	{
 		infoPanel.removeAll();
 		infoPanel.revalidate();
@@ -1233,25 +1265,25 @@ public class GraphicOrganizer {
 		actionPanel.repaint();
 	}
 	
-	private void clearStack()
+	private void clearStack()		//clears the screens stack
 	{
 		while (!screens.isEmpty())
 			screens.pop();
 	}
 	
-	private void removeNote()
+	private void removeNote()		//removes the selected note
 	{
 		noteObject.remove(index);
 		index = 0;
 	}
 	
-	private void removeActivity()
+	private void removeActivity()		//removes the selected activity
 	{
 		activityObject.remove(index);
 		index = 0;
 	}
 	
-	private void removeClass()
+	private void removeClass()		//removes the selected class
 	{
 		if (classDayText.equals("Monday"))
 			mondayClasses.remove(index);
@@ -1267,7 +1299,7 @@ public class GraphicOrganizer {
 		index = 0;
 	}
 	
-	public void saveProgress() throws Exception
+	public void saveProgress() throws Exception		//saves progress
 	{
 		saveField.setText("Saving progress...");
 		
@@ -1276,13 +1308,6 @@ public class GraphicOrganizer {
 		//record the notes created
 		for (int i = 0; i < noteObject.size(); i++)
 		{
-			/*
-			 *	//SAMPLE WRITE
-			writer.write("hello, HURRRRHGHGHGHGH");
-			writer.newLine();
-			writer.write("goodbye");
-			writer.close();
-			*/
 			//write down the parts of the note, each part being separated by the word <Space>
 			noteWriter.write(noteObject.get(i).getMonth());		//records month
 			noteWriter.write("<Space>");

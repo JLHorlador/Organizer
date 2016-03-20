@@ -46,7 +46,7 @@ public class NewClassScheduleObject
 	public JButton createButton()
 	{
 		JButton newClassButton = new JButton(title);
-		newClassButton.setPreferredSize(new Dimension(570, 20));
+		newClassButton.setPreferredSize(new Dimension(570, 40));
 		newClassButton.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)

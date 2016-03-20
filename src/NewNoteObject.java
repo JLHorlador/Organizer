@@ -39,7 +39,7 @@ public class NewNoteObject
 	public JButton createButton()
 	{
 		JButton newNoteButton = new JButton(title);
-		newNoteButton.setPreferredSize(new Dimension(570, 20));
+		newNoteButton.setPreferredSize(new Dimension(570, 40));
 		newNoteButton.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
